@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PuppyCard from "./PuppyCard";
+
 
 import axios from "axios";
 import SkeletonPuppyCard from "./SkeletonPuppyCard";
@@ -9,6 +11,7 @@ const Puppy = () => {
   const skeletonCount = 8;
   // const [puppies, setPuppies] = useState([]);
   // const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const {puppies, loading} = useFilter()
 
@@ -25,11 +28,24 @@ const Puppy = () => {
   //   }
   // }, []);
 
+
+  const handleSeeAllClick = () => {
+    // console.log("Navigating to /PuppyCollection");
+    navigate("/Collection");
+  };
+
   return (
     <div className="py-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="lg:text-4xl text-2xl font-medium">Our Available Puppy</h1>
-        <span className="lg:pr-10 hover:underline cursor-pointer">See all</span>
+        
+        <span
+          className="lg:pr-10 hover:underline cursor-pointer"
+          onClick={handleSeeAllClick}
+        >
+          See all
+        </span>
+
       </div>
       <div className="flex flex-wrap items-center gap-x-6 gap-y-6">
         {loading
