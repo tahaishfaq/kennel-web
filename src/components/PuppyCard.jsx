@@ -26,13 +26,18 @@ const PuppyCard = ({ data }) => {
           <p className="font-medium">{"$" + data?.price}</p>
         </div>
         <div>
-          <span className="text-[#000000A3] text-sm">{data?.size}</span>
+          <span className="text-[#000000A3] text-sm">{data?.size + " - "}{data?.litter_breed != null ? data?.litter_breed : "Goldendoodle"}</span>
         </div>
-        <div className="flex items-center gap-x-1.5">
-          <span>
-            <FaRegCircle className="w-3 h-3" />
+        <div className="flex items-center justify-between">
+          <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
+            {data?.weight + " " + data?.weight_unit}
           </span>
-          <span className="text-sm ">{data?.availability_status}</span>
+          <div className="flex items-center gap-x-1.5">
+            <span>
+              <FaRegCircle className="w-3 h-3" />
+            </span>
+            <span className="text-sm ">{data?.ready_to_go_home}</span>
+          </div>
         </div>
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-x-2">
@@ -40,12 +45,10 @@ const PuppyCard = ({ data }) => {
               {data?.coat_color ? data?.coat_color : "-"}
             </span>
             <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
-              {data?.size}
+              Learn More
             </span>
             <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
-              {data?.go_home_date
-                ? moment(data?.go_home_date).format("ll")
-                : moment().format("ll")}
+              Video Chat
             </span>
           </div>
           <RiShareLine />

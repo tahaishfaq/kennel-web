@@ -6,19 +6,19 @@ export default function HeroSectionCollections() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative flex flex-col md:flex-row">
+    <div className="relative flex flex-col md:flex-row ">
       <img
         alt="Background"
         src={bg}
-        className="object-cover w-full h-64 md:h-auto md:w-full"
+        className="object-cover w-full h-64 md:h-auto md:w-full rounded-lg"
       />
 
-      <div className="bg-black bg-opacity-40 absolute inset-0 flex justify-start items-center text-left text-white px-4 md:px-11">
-        <div className="p-4 rounded w-full md:w-1/2 lg:w-2/5">
-          <h1 className="font-semibold text-2xl md:text-4xl mb-4">
+      <div className="bg-black bg-opacity-40 absolute inset-0 flex justify-start items-end text-left text-white px-4 md:px-16 rounded-lg">
+        <div className="p-4 rounded w-full ">
+          <h1 className="font-medium text-2xl md:text-4xl mb-4 md:w-1/2 lg:w-2/5">
             Pets Are Not Just Animals, They Are A Part Of Your Family
           </h1>
-          <p className="font-medium text-xs md:text-sm">
+          <p className="font-normal text-xs md:text-sm md:w-1/2 lg:w-2/4">
             Having a pet means you have more joy, a new friend, a happy person
             who will always be with you to have fun. We have 200+ different pets
             that can meet your needs!

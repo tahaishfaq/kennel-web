@@ -31,11 +31,11 @@ const Puppy = () => {
 
   const handleSeeAllClick = () => {
     // console.log("Navigating to /PuppyCollection");
-    navigate("/Collection");
+    navigate("/collection");
   };
 
   return (
-    <div className="py-6 space-y-6">
+    <div className="py-6 space-y-6 ">
       <div className="flex items-center justify-between">
         <h1 className="lg:text-4xl text-2xl font-medium">Our Available Puppy</h1>
         

@@ -58,6 +58,7 @@ export const FilterProvider = ({ children }) => {
       axios
         .get(`${window.$BackEndURL}/api/method/get-pups${query}`)
         .then((res) => {
+          console.log("Puppies",res?.data?.data);
           setPuppies(res.data.data);
           setLoading(false);
         })

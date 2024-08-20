@@ -7,25 +7,32 @@ import Footer from "../../components/Footer";
 import { FilterProvider } from "../../context/FilterContext";
 import Puppy from "../../components/Puppy";
 import HeroSectionCollections from "../../components/HeroSectionCollection";
+import NavBar from "../../components/NavBar";
+import FilterBar from "../../components/FilterBar";
 
 const PuppyCollection = () => {
   return (
     <FilterProvider>
-      <div className="font-poppins ">
-        <div>
-        <HeroSectionCollections />
-        </div>
-        <div className="flex flex-col gap-y-16 lg:items-start items-center py-10 lg:px-0 px-2 max-w-7xl mx-auto">
-          <Puppy />
+      <div className="font-poppins max-w-[1440px] mx-auto">
+        <div className="flex flex-col gap-y-16">
+          <NavBar />
+
+          <HeroSectionCollections />
+
+          <FilterBar />
+
+          <div className="max-w-7xl mx-auto">
+            <Puppy />
+          </div>
 
           <div className="flex flex-col items-start gap-y-10 pt-16 font-light">
             <CityFilter />
             <StateFilter />
           </div>
         </div>
-        <div className="pt-20">
-          <Footer />
-        </div>
+      </div>
+      <div className="pt-20">
+        <Footer />
       </div>
     </FilterProvider>
   );
