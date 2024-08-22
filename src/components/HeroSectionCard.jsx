@@ -69,7 +69,7 @@ const HeroSectionCard = () => {
     }
 
     const filterQuery =
-      filters.length > 0
+      filters?.length > 0
         ? `?filters=${encodeURIComponent(JSON.stringify(filters))}`
         : "";
 
@@ -83,7 +83,7 @@ const HeroSectionCard = () => {
       </h2>
       <div className="relative flex items-center mb-4 ">
         <div className="flex w-full ">
-          {[1, 2, 3, 4].map((step) => (
+          {[1, 2, 3, 4]?.map((step) => (
             <div key={step} className="flex items-center w-full">
               <div
                 className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
