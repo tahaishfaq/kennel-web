@@ -6,14 +6,14 @@ export default function HeroSectionCollections() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="relative flex flex-col md:flex-row ">
+    <div className="relative flex flex-col md:flex-row">
       <img
         alt="Background"
         src={bg}
-        className="object-cover w-full h-64 md:h-auto md:w-full rounded-lg"
+        className="object-cover w-full h-64 md:h-auto md:w-full lg:rounded-lg md:rounded-lg"
       />
 
-      <div className="bg-black bg-opacity-40 absolute inset-0 flex justify-start items-end text-left text-white px-4 md:px-16 rounded-lg">
+      <div className="bg-black bg-opacity-40 absolute inset-0 flex justify-start items-end text-left text-white px-4 md:px-16 lg:rounded-lg">
         <div className="p-4 rounded w-full ">
           <h1 className="font-medium text-2xl md:text-4xl mb-4 md:w-1/2 lg:w-2/5">
             Pets Are Not Just Animals, They Are A Part Of Your Family
@@ -30,7 +30,7 @@ export default function HeroSectionCollections() {
           />
         </div>
 
-        <div className="absolute right-6 top-8 md:right-10 md:top-16 flex items-center pr-6 md:pr-8">
+        <div className="absolute lg:right-6 right-1 top-5 md:right-10 md:top-16 flex items-center pr-3 md:pr-8">
           <img alt="paw" src={paw} className="w-6 h-6 md:w-auto md:h-auto" />
         </div>
       </div>

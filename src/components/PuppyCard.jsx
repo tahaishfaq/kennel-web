@@ -7,13 +7,13 @@ const PuppyCard = ({ data }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/puppy/${data?.id}`); // Navigate to PuppyDetail with the specific puppy ID
+    navigate(`/puppy/${data?.name}`);
   };
 
   return (
     <div
       className="bg-white p-2 border border-gray-200 rounded-md lg:max-w-[397px] w-full cursor-pointer hover:shadow-lg transition-shadow duration-200"
-      onClick={handleCardClick}  // Add onClick event to the card
+      onClick={handleCardClick}
     >
       <div>
         <img
@@ -71,57 +71,6 @@ const PuppyCard = ({ data }) => {
 };
 
 export default PuppyCard;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import moment from "moment";
 // import React from "react";

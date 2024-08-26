@@ -30,11 +30,11 @@ const Footer = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="px-4 bg-[#A1ADAB] py-12">
+    <div className="px-4 bg-[#A1ADAB] lg:py-12 md:py-12 pt-5 pb-10">
       <div className="flex flex-col lg:px-16  gap-y-8 mx-auto max-w-[1440px]">
         <div className="flex flex-col lg:flex-row lg:px-6 bg-[#A1ADAB] py-12 ">
           <div className="w-full">
-            <div className="w-full h-auto px-6 flex flex-col md:flex-row justify-center items-center gap-y-3 text-[#000000] bg-white rounded-[8px]">
+            <div className="w-full h-auto px-6 lg:pb-0 md:pb-0 pb-8 flex flex-col md:flex-row justify-center items-center gap-y-3 text-[#000000] bg-white rounded-[8px]">
               <h1 className="font-normal text-[28px] p-8 text-center md:text-left">
                 Register now so you don't miss our programs
               </h1>

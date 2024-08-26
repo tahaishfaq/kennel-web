@@ -1,16 +1,10 @@
 import React from "react";
 import { FaLocationArrow } from "react-icons/fa";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlineMessage } from "react-icons/md";
-import { TbClockRecord } from "react-icons/tb";
-import { TbWeight } from "react-icons/tb";
-import { TbDog } from "react-icons/tb";
-import { TbHomeShare } from "react-icons/tb";
-import { IoColorPaletteOutline } from "react-icons/io5";
-import { BiRuler } from "react-icons/bi";
-import { IoPawOutline } from "react-icons/io5";
+import { TbClockRecord, TbWeight, TbDog, TbHomeShare } from "react-icons/tb";
+import { IoColorPaletteOutline, IoPawOutline } from "react-icons/io5";
+import { BiRuler, BiInjection } from "react-icons/bi";
 import { FaRegAddressCard } from "react-icons/fa6";
-import { BiInjection } from "react-icons/bi";
 import embarck from "../assets/embark_logo.png";
 import genetics from "../assets/Animal-Genetics-logo-Blue.png";
 import frame1 from "../assets/Frame 110.png";
@@ -20,67 +14,66 @@ import medal from "../assets/medal 1.png";
 import vector from "../assets/Vector.png";
 import vector1 from "../assets/Vector (1).png";
 
-const PuppyDetail = () => {
+const PuppyDetail = ({ puppyDetail }) => {
   return (
-    <div className="p-6 ">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <img
-          src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=3270&auto=format&fit=crop"
-          alt="puppy"
-          className="rounded-md w-full object-cover object-center"
-        />
-        <img
-          src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=3270&auto=format&fit=crop"
-          alt="puppy"
-          className="rounded-md w-full object-cover object-center"
-        />
-        <img
-          src="https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=3270&auto=format&fit=crop"
-          alt="puppy"
-          className="rounded-md w-full object-cover object-center"
-        />
+    <div className="lg:p-6 p-3">
+      {/* Puppy Images Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {puppyDetail?.images?.slice(0, 3)?.map((imageData, index) => (
+          <img
+            key={index}
+            src={`${window.$BackEndURL}${imageData.image}`}
+            alt={`puppy-${index}`}
+            className="rounded-md w-full h-60 object-cover object-center"
+          />
+        ))}
       </div>
 
-      <div className="mt-6 bg-white p-2">
+      {/* Puppy Information Section */}
+      <div className="mt-6 bg-white p-4 lg:p-6 rounded-lg">
         <div className="flex flex-col lg:flex-row lg:justify-between">
-          <div className="lg:w-[80%]">
+          {/* Left Side - Puppy Name and Info */}
+          <div className="lg:w-[70%]">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-4xl font-medium text-[#000000] mb-1">
-                  Champ
+                <h1 className="text-2xl lg:text-4xl font-medium text-[#000000] mb-1">
+                  {puppyDetail?.puppy_name}
                 </h1>
-                <h2 className="text-[#000000CC] font-normal text-base">
+                <h2 className="text-[#000000CC] font-normal text-base lg:text-lg">
                   Information
                 </h2>
               </div>
-              <div className="text-right">
-                <p className="text-4xl font-medium text-[#000000]">USD $250</p>
-                <p className="text-[#000000CC] font-medium text-base">
-                  Initial deposit amount will be $50
+              <div className="text-right mt-4 lg:mt-0">
+                <p className="text-2xl lg:text-4xl font-medium text-[#000000]">
+                  USD ${puppyDetail?.price}
+                </p>
+                <p className="text-[#000000CC] font-medium text-sm lg:text-base">
+                  Initial deposit amount will be ${puppyDetail?.deposit_amount}
                 </p>
               </div>
             </div>
 
+            {/* Location Section */}
             <div className="mt-6">
-              <div className="flex items-center bg-[#E8E7E5] rounded-lg p-4 mb-5 w-3/5">
-                <FaLocationArrow className="text-4xl bg-black text-white mr-4 border p-2 border-black rounded-lg" />
+              <div className="flex items-center bg-[#E8E7E5] rounded-lg p-4 mb-5">
+                <FaLocationArrow className="text-2xl lg:text-4xl bg-black text-white mr-4 border p-2 border-black rounded-lg" />
                 <div>
                   <p className="font-medium text-sm text-[#000000CC]">
                     Location
                   </p>
                   <p className="text-[#000000CC] font-medium text-sm">
-                    Akshay Nagar 1st Block 1st Cross, Rammurthy Nagar,
-                    Bangalore, 560016
+                    Akshay Nagar 1st Block 1st Cross, Rammurthy Nagar, Bangalore, 560016
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="border-[#0000001F] border rounded-md p-5">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4">
+            {/* Puppy Details Grid */}
+            <div className="border-[#0000001F] border rounded-md p-4 lg:p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
+                <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
                   <p className="flex items-center">
-                    <TbClockRecord className="text-xl text-[#000000] mr-2" />
+                    <TbClockRecord className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Age:
                     </span>
@@ -89,28 +82,28 @@ const PuppyDetail = () => {
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <TbWeight className="text-xl text-[#000000] mr-2" />
+                    <TbWeight className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Weight:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      8-15 lbs
+                      {puppyDetail?.weight}{puppyDetail?.weight_unit}
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <TbDog className="text-xl text-[#000000] mr-2" />
+                    <TbDog className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Gender:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      Male
+                      {puppyDetail?.gender}
                     </span>
                   </p>
                 </div>
 
-                <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4">
+                <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
                   <p className="flex items-center">
-                    <TbHomeShare className="text-xl text-[#000000] mr-2" />
+                    <TbHomeShare className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Bring Home on:
                     </span>
@@ -119,28 +112,28 @@ const PuppyDetail = () => {
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <IoColorPaletteOutline className="text-xl text-[#000000] mr-2" />
+                    <IoColorPaletteOutline className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Color:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      Black
+                      {puppyDetail?.coat_color}
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <BiRuler className="text-xl text-[#000000] mr-2" />
+                    <BiRuler className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Size:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      Toy
+                      {puppyDetail?.size}
                     </span>
                   </p>
                 </div>
 
                 <div className="flex flex-col space-y-2">
                   <p className="flex items-center">
-                    <IoPawOutline className="text-xl text-[#000000] mr-2" />
+                    <IoPawOutline className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Breed:
                     </span>
@@ -149,16 +142,16 @@ const PuppyDetail = () => {
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <FaRegAddressCard className="text-xl text-[#000000] mr-2" />
+                    <FaRegAddressCard className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Puppy ID:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      26424
+                      {puppyDetail?.name}
                     </span>
                   </p>
                   <p className="flex items-center">
-                    <BiInjection className="text-xl text-[#000000] mr-2" />
+                    <BiInjection className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
                       Vaccinated:
                     </span>
@@ -169,11 +162,12 @@ const PuppyDetail = () => {
                 </div>
               </div>
 
+              {/* About Puppy Section */}
               <div className="mt-6">
-                <h2 className="text-[#000000CC] font-medium text-lg">
+                <h2 className="text-[#000000CC] font-medium text-lg lg:text-xl">
                   About Puppy
                 </h2>
-                <p className="mt-2 text-[#000000A3] font-normal text-base">
+                <p className="mt-2 text-[#000000A3] font-normal text-sm lg:text-base leading-relaxed">
                   Hi! My name is Champ. I am a very gorgeous and unique puppy. I
                   am now taking applications for my new family. I want to live
                   with them forever, so I must make sure that I choose the right
@@ -190,80 +184,83 @@ const PuppyDetail = () => {
                 </p>
               </div>
 
+              {/* Guarantee Section */}
               <div className="mt-6">
-                <div className="flex flex-row">
-                  <div className="flex flex-row md:grid-cols-2 gap-4 bg-[#0000000A] p-2 rounded-md">
-                    <div className="flex items-center">
-                      <img src={frame1} alt="" className="h-8" />
-                      <p className="text-[#000000] font-normal text-sm">
-                        100% health guarantee for pets
-                      </p>
+                <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 bg-[#0000000A] p-2 lg:p-4 rounded-md">
+                  <div className="flex items-center">
+                    <img src={frame1} alt="" className="h-6 lg:h-8" />
+                    <p className="ml-2 text-[#000000] font-normal text-sm lg:text-base">
+                      100% health guarantee for pets
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <img src={frame2} alt="" className="h-6 lg:h-8" />
+                    <p className="ml-2 text-[#000000] font-normal text-sm lg:text-base">
+                      100% guarantee of pet identification
+                    </p>
+                  </div>
+                </div>
+
+                {/* Logos Section */}
+                <div className="mt-4 flex flex-col lg:flex-row gap-4 lg:gap-8">
+                  <div className="flex justify-between gap-4">
+                    <div className="border rounded-lg p-2">
+                      <img src={embarck} alt="Embark" className="h-8 lg:h-10" />
                     </div>
-                    <div className="flex items-center">
-                      <img src={frame2} alt="" className="h-8" />
-                      <p className="text-[#000000] font-normal text-sm">
-                        100% guarantee of pet identification
-                      </p>
+                    <div className="border rounded-lg p-2">
+                      <img src={genetics} alt="genetics" className="h-8 lg:h-10" />
                     </div>
                   </div>
+                </div>
+              </div>
 
-                  <div className="flex flex-row gap-x-4 ml-14">
-                    <div className="border rounded-lg">
-                      <img src={embarck} alt="Embark" className="p-2" />
-                    </div>
-                    <div className="border rounded-lg border-[#0000001F]">
-                      <img src={genetics} alt="genetics" className="p-2" />
+              {/* Excellence and Features Section */}
+              <div className="mt-6 flex flex-col lg:flex-row gap-4 lg:gap-8 bg-[#0000000A] p-2 lg:p-4 rounded-md">
+                <div className="flex flex-col items-start w-full lg:w-1/2 border-r-2 border-dotted pr-4">
+                  <div className="flex items-start gap-2">
+                    <img src={excellence} alt="Excellence" className="h-6 lg:h-8" />
+                    <div className="flex flex-col">
+                      <p className="text-[#000000] font-medium text-lg lg:text-xl">
+                        Champions of Excellence
+                      </p>
+                      <span className="text-[#000000A3] font-normal text-xs lg:text-sm">
+                        This puppy meets the highest quality standards.
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-4 flex  gap-2 bg-[#0000000A] ">
-                  <div className="flex w-full items-start flex-col border-r-2 border-dotted p-2 rounded-md">
-                    <div className="flex flex-row items-start gap-x-1">
-                      <img src={excellence} alt="" className="h-6" />
-                      <div className="flex flex-col">
-                        <p className="text-[#000000] font-medium text-lg">
-                          Champions of Excellence
-                        </p>
-                        
-                      </div>
-                    </div>
-                    <span className="text-[#000000A3] font-normal text-xs">
-                          This puppy meets the highest quality standards.
-                        </span>
+                <div className="flex justify-around w-full lg:w-1/2">
+                  <div className="flex flex-col items-center">
+                    <img src={medal} alt="AKC Register" className="h-6 lg:h-8" />
+                    <span className="text-[#000000] font-normal text-xs lg:text-sm">
+                      AKC Register
+                    </span>
                   </div>
-
-                  <div className="flex items-center w-full justify-center p-2 gap-x-2 rounded-md">
-                    <div className="flex flex-col w-full items-center justify-center gap-y-1">
-                      <img src={medal} alt="" className="h-6" />
-                      <span className="text-[#000000] font-normal text-xs">
-                        AKC Register
-                      </span>
-                    </div>{" "}
-                    <div className="flex flex-col w-full items-center justify-center gap-y-1">
-                      <img src={vector} alt="" className="h-6" />
-                      <span className="text-[#000000] font-normal text-xs">
-                        Potty Trained
-                      </span>
-                    </div>
-                    <div className="flex flex-col w-full items-center justify-center gap-y-1">
-                      <img src={vector1} alt="" className="h-6" />
-                      <span className="text-[#000000] flex items-center justify-center text-center font-normal text-xs">
-                        Champion Bloodline
-                      </span>
-                    </div>
+                  <div className="flex flex-col items-center">
+                    <img src={vector} alt="Potty Trained" className="h-6 lg:h-8" />
+                    <span className="text-[#000000] font-normal text-xs lg:text-sm">
+                      Potty Trained
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <img src={vector1} alt="Champion Bloodline" className="h-6 lg:h-8" />
+                    <span className="text-[#000000] font-normal text-xs lg:text-sm text-center">
+                      Champion Bloodline
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="  lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
+          {/* Right Side - Actions */}
+          <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
             <div className="bg-[#E8E7E5] py-4 px-4 border rounded-md">
-              <button className=" w-full flex items-center font-medium text-base justify-center text-center bg-black text-white px-4 py-2 rounded-md mb-4">
+              <button className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4">
                 <MdOutlineMessage className="mr-2" /> Talk to Breeder
               </button>
-              <button className=" w-full flex items-center text-[#000000] font-medium text-base justify-center text-center bg-white border border-black px-4 py-2 rounded-md">
+              <button className="w-full flex items-center text-[#000000] font-medium text-base lg:text-lg justify-center border border-black px-4 py-2 rounded-md">
                 Take me home
               </button>
             </div>

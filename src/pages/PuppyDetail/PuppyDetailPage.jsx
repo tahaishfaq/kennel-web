@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import PuppyDetail from "../../components/PuppyDetail";
 import Footer from "../../components/Footer";
@@ -7,18 +7,38 @@ import CityFilter from "../../components/CityFilter";
 import StateFilter from "../../components/StateFilter";
 import Siblings from "../../components/Siblings";
 import Parents from "../../components/Parents";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const PuppyDetailPage = () => {
+  const { id } = useParams();
+  const [puppyDetail, setPuppyDetail] = useState(null);
+
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          `${window.$BackEndURL}/api/method/get-pups?filters=[["name","=","${id}"]]`
+        )
+        .then((res) => {
+          console.log("singlePuppy", res?.data?.data[0]);
+          setPuppyDetail(res?.data?.data[0]);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
+
   return (
     <>
       <div className="font-poppins max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-y-16">
           <NavBar />
 
-          <div className="max-w-7xl mx-auto">
-            <PuppyDetail />
-            <Siblings />
-            <Parents />
+          <div className="">
+            <PuppyDetail puppyDetail={puppyDetail} />
+            {/* <Siblings /> */}
+            {/* <Parents /> */}
           </div>
 
           <div>

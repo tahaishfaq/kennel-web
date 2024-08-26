@@ -14,14 +14,14 @@ const PuppyCollection = () => {
   return (
     <FilterProvider>
       <div className="font-poppins max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-y-16">
-          <NavBar />
-
+        <NavBar />
+        <div className="flex flex-col lg:space-y-16 space-y-8">
           <HeroSectionCollections />
 
-          <FilterBar />
-
-          <div className="max-w-7xl mx-auto">
+          <div className="lg:px-0 md:px-0 px-2">
+            <FilterBar />
+          </div>
+          <div className="max-w-7xl mx-auto lg:px-0 md:px-0 px-2">
             <Puppy />
           </div>
 
