@@ -21,7 +21,7 @@ const PuppySummary = () => {
           <img src={image1} alt="Puppy" className="w-1/3 rounded-lg" />
         </div>
 
-        <div className="flex justify-center items-center rounded-md p-4 lg:p-">
+        <div className="flex justify-center items-center rounded-md p-4 ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
             <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
               <p className="flex items-center">
@@ -38,14 +38,18 @@ const PuppySummary = () => {
                 <span className="font-normal text-sm text-[#000000CC]">
                   Weight:
                 </span>
-                <span className="ml-2 text-[#000000CC] font-semibold text-sm"></span>
+                <span className="ml-2 text-[#000000CC] font-semibold text-sm">
+                  15- 8 lbs
+                </span>
               </p>
               <p className="flex items-center">
                 <TbDog className="text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Gender:
                 </span>
-                <span className="ml-2 text-[#000000CC] font-semibold text-sm"></span>
+                <span className="ml-2 text-[#000000CC] font-semibold text-sm">
+                  Male
+                </span>
               </p>
             </div>
 
@@ -64,14 +68,18 @@ const PuppySummary = () => {
                 <span className="font-normal text-sm text-[#000000CC]">
                   Color:
                 </span>
-                <span className="ml-2 text-[#000000CC] font-semibold text-sm"></span>
+                <span className="ml-2 text-[#000000CC] font-semibold text-sm">
+                  Black
+                </span>
               </p>
               <p className="flex items-center">
                 <BiRuler className="text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Size:
                 </span>
-                <span className="ml-2 text-[#000000CC] font-semibold text-sm"></span>
+                <span className="ml-2 text-[#000000CC] font-semibold text-sm">
+                  Toy
+                </span>
               </p>
             </div>
 
@@ -90,7 +98,9 @@ const PuppySummary = () => {
                 <span className="font-normal text-sm text-[#000000CC]">
                   Puppy ID:
                 </span>
-                <span className="ml-2 text-[#000000CC] font-semibold text-sm"></span>
+                <span className="ml-2 text-[#000000CC] font-semibold text-sm">
+                  25424
+                </span>
               </p>
               <p className="flex items-center">
                 <BiInjection className="text-xl lg:text-2xl text-[#000000] mr-2" />

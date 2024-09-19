@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiMessageDetail } from "react-icons/bi";
+import Chat from "./Chat";
 
 const CustomerStep1 = ({ onContinue }) => {
+  const [showChat, setShowChat] = useState(false);
+
+  const handleChatToggle = () => {
+    setShowChat(true);
+  };
+
+  const closeChat = () => {
+    setShowChat(false);
+  };
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h2 className="text-[28px] font-medium mb-4">Customer Info</h2>
@@ -39,18 +49,17 @@ const CustomerStep1 = ({ onContinue }) => {
           </div>
         </div>
 
-        
-          <div className="mt-7">
-            <label className="block text-base font-medium text-[#212B36]">
-              Billing Address
-            </label>
-            <input
-              type="text"
-              placeholder="Default input text"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-[#637381] font-medium text-base"
-            />
-          </div>
-        
+        <div className="mt-7">
+          <label className="block text-base font-medium text-[#212B36]">
+            Billing Address
+          </label>
+          <input
+            type="text"
+            placeholder="Default input text"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-[#637381] font-medium text-base"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
           <div>
             <label className="block text-base font-medium text-[#212B36]">
@@ -74,26 +83,18 @@ const CustomerStep1 = ({ onContinue }) => {
           </div>
         </div>
 
-
-        
         <div className="mt-7">
-            <label className="block text-base font-medium text-[#212B36]">
-              Shipping Address
-            </label>
-            <input
-              type="text"
-              placeholder="Default input text"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-[#637381] font-medium text-base"
-            />
-          </div>
-        
-
-
-
-
+          <label className="block text-base font-medium text-[#212B36]">
+            Shipping Address
+          </label>
+          <input
+            type="text"
+            placeholder="Default input text"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-[#637381] font-medium text-base"
+          />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
-          
           <div>
             <label className="block text-base font-medium text-[#212B36]">
               Shipping ZIP Code
@@ -116,20 +117,33 @@ const CustomerStep1 = ({ onContinue }) => {
           </div>
         </div>
         <div className="flex flex-col items-end justify-end gap-y-3 mt-6">
-          <button 
-          className="bg-[#3056D3] text-white px-4 py-2 rounded-md"
-          onClick={onContinue}
+          <button
+            className="bg-[#3056D3] text-white px-4 py-2 rounded-md"
+            onClick={onContinue}
           >
-            
             Continue
           </button>
 
-          <button className="flex items-center bg-[#3056D3] text-white px-4 py-2 rounded-md">
-            <BiMessageDetail className="mr-2" /> {/* Add the icon here */}
+          <button
+            className="flex items-center bg-[#3056D3] text-white px-4 py-2 rounded-md"
+            onClick={handleChatToggle}
+          >
+            <BiMessageDetail className="mr-2" />
             Chat with Seller
           </button>
         </div>
       </div>
+      {showChat && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black bg-opacity-50"
+            onClick={closeChat}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <Chat closeChat={closeChat} />
+          </div>
+        </>
+      )}
     </div>
   );
 };
