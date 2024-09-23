@@ -5,139 +5,136 @@ import { TbClockRecord, TbWeight, TbDog, TbHomeShare } from "react-icons/tb";
 import { IoColorPaletteOutline, IoPawOutline } from "react-icons/io5";
 import { BiRuler, BiInjection } from "react-icons/bi";
 import { FaRegAddressCard } from "react-icons/fa6";
-import image1 from "../assets/Frame 1000004326.png";
 
-const PuppySummary = () => {
+const PuppySummary = ({ puppyDetails }) => {
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h2 className=" text-[#000000] text-[28px] font-medium mt-14 mb-4">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
+      <h2 className="text-[#000000] text-[24px] sm:text-[28px] font-medium mt-10 mb-6 text-center sm:text-left">
         Puppy Summary
       </h2>
 
-      <div className=" bg-[#0000000A] rounded-lg  ">
-        <div className="flex gap-4 my-6 mx-[121px] pt-6">
-          <img src={image1} alt="Puppy" className="w-1/3 rounded-lg" />
-          <img src={image1} alt="Puppy" className="w-1/3 rounded-lg" />
-          <img src={image1} alt="Puppy" className="w-1/3 rounded-lg" />
+      <div className="bg-[#0000000A] rounded-lg">
+        {/* Puppy Images */}
+        <div className="flex flex-col sm:flex-row sm:gap-4 gap-2 p-4 justify-center">
+          {puppyDetails?.images?.map((image, index) => (
+            <img
+              key={index}
+              src={window.$BackEndURL + image?.image}
+              alt={`Puppy ${index + 1}`}
+              className="w-full sm:w-40 h-40 object-cover object-center rounded-lg"
+            />
+          ))}
         </div>
 
-        <div className="flex justify-center items-center rounded-md p-4 ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
-            <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
+        {/* Puppy Details */}
+        <div className="flex justify-center items-center rounded-md p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 w-full">
+            <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-0 sm:pr-4 lg:pr-6">
               <p className="flex items-center">
-                <TbClockRecord className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <TbClockRecord className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
-                  Age:
+                  Go Home Date:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  May 14, 2023
+                  {puppyDetails?.go_home_date}
                 </span>
               </p>
               <p className="flex items-center">
-                <TbWeight className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <TbWeight className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Weight:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  15- 8 lbs
+                  {puppyDetails?.weight} {puppyDetails?.weight_unit}
                 </span>
               </p>
               <p className="flex items-center">
-                <TbDog className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <TbDog className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Gender:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  Male
+                  {puppyDetails?.gender}
                 </span>
               </p>
             </div>
 
-            <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
+            <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-0 sm:pr-4 lg:pr-6">
               <p className="flex items-center">
-                <TbHomeShare className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <TbHomeShare className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
-                  Bring Home on:
+                  Ready to Go Home:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  July 9, 2024
+                  {puppyDetails?.ready_to_go_home}
                 </span>
               </p>
               <p className="flex items-center">
-                <IoColorPaletteOutline className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <IoColorPaletteOutline className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
-                  Color:
+                  Coat Color:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  Black
+                  {puppyDetails?.coat_color}
                 </span>
               </p>
               <p className="flex items-center">
-                <BiRuler className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <BiRuler className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Size:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  Toy
+                  {puppyDetails?.size}
                 </span>
               </p>
             </div>
 
             <div className="flex flex-col space-y-2">
               <p className="flex items-center">
-                <IoPawOutline className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <IoPawOutline className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Breed:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  Golden
+                  {puppyDetails?.litter_breed_name}
                 </span>
               </p>
               <p className="flex items-center">
-                <FaRegAddressCard className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <FaRegAddressCard className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Puppy ID:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  25424
+                  {puppyDetails?.name}
                 </span>
               </p>
               <p className="flex items-center">
-                <BiInjection className="text-xl lg:text-2xl text-[#000000] mr-2" />
+                <BiInjection className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
                   Vaccinated:
                 </span>
                 <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                  Yes
+                  {puppyDetails?.vaccinations_table?.length > 0 ? "Yes" : "No"}
                 </span>
               </p>
             </div>
           </div>
         </div>
 
+        {/* About Puppy */}
         <div className="bg-gray-100 p-4 rounded-lg">
-          <h3 className=" text-[#000000CC] text-lg font-semibold mb-2 mt-7">
+          <h3 className="text-[#000000CC] text-lg font-semibold mb-2 mt-7 text-center sm:text-left">
             About Puppy
           </h3>
-          <p className="text-[#000000A3] text-base font-normal">
-            Hi! My name is Champ. I am a very gorgeous and unique puppy. I am
-            now taking applications for my new family. I want to live with them
-            forever, so I must make sure that I choose the right one! I am told
-            that I am very smart, sweet, and playful. I love to watch.
+          <p className="text-[#000000A3] text-base text-justify font-normal">
+            Hi! My name is {puppyDetails?.puppy_name}. I am a very gorgeous and
+            unique puppy. I am now taking applications for my new family. I want
+            to live with them forever, so I must make sure that I choose the
+            right one! I am told that I am very smart, sweet, and playful.
           </p>
         </div>
       </div>
-
-      <div className="flex flex-col justify-center items-center bg-[#1877F20A] mt-8 rounded-lg">
-        <div className="flex flex-col justify-center items-center my-8">
-          <h3 className="text-[#000000] text-[28px] font-normal mb-2 text-center">
-            Please Verify your Identity First
-          </h3>
-          <button className="bg-[#3056D3] text-white font-medium text-base py-2 px-4 rounded mt-4">
-            Verify Identity
-          </button>
-        </div>
-      </div>
+      
     </div>
   );
 };

@@ -16,8 +16,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<PuppyCollection />} />
         <Route path="/puppy/:id" element={<PuppyDetailPage />} />
-        <Route path="/checkout" element={<PuppySummaryPage />} />
-        <Route path="/payment-status" element={<PaymentStatus />} />
+        <Route path="/checkout/:hashId" element={<PuppySummaryPage />} />
+        <Route path="/payment-success" element={<PaymentStatus />} />
       </Routes>
     </Router>
   );
