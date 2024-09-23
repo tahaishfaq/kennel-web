@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useAdoption } from "../../context/AdoptionContext";
 import axios from "axios";
 import IdentityVerification from "../../components/IdentityVerification";
+import AdoptionTicket from "../../components/AdoptionTicket";
 
 const PuppySummaryPage = () => {
   const [step, setStep] = useState(1); // Default to step 1
@@ -71,6 +72,9 @@ const PuppySummaryPage = () => {
           customer={customerDetails}
         />
       )}
+      <div>
+        <AdoptionTicket />
+      </div>
     </div>
   );
 };
