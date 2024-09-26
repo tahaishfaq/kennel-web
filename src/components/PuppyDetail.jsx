@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { FaLocationArrow } from "react-icons/fa";
 import { MdOutlineMessage } from "react-icons/md";
 import { TbClockRecord, TbWeight, TbDog, TbHomeShare } from "react-icons/tb";
@@ -13,8 +13,20 @@ import excellence from "../assets/excellence.png";
 import medal from "../assets/medal 1.png";
 import vector from "../assets/Vector.png";
 import vector1 from "../assets/Vector (1).png";
+import TalkToBreederPopover from './TalkToBreederPopover';
+
 
 const PuppyDetail = ({ puppyDetail }) => {
+
+
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsPopoverOpen(!isPopoverOpen);
+  };
+
+
+
   return (
     <div className="lg:p-6 p-3">
       {/* Puppy Images Section */}
@@ -257,9 +269,13 @@ const PuppyDetail = ({ puppyDetail }) => {
           {/* Right Side - Actions */}
           <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
             <div className="bg-[#E8E7E5] py-4 px-4 border rounded-md">
-              <button className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4">
+              <button className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4"  onClick={handleButtonClick} >
                 <MdOutlineMessage className="mr-2" /> Talk to Breeder
               </button>
+              {isPopoverOpen && (
+          <TalkToBreederPopover />
+        )}
+
               <button className="w-full flex items-center text-[#000000] font-medium text-base lg:text-lg justify-center border border-black px-4 py-2 rounded-md">
                 Take me home
               </button>
