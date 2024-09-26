@@ -10,10 +10,10 @@ import {
   orderBy,
   addDoc,
   serverTimestamp,
+  updateDoc,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
 import { toast, Toaster } from "sonner";
 
 const Chat = ({ closeChat }) => {
@@ -24,6 +24,7 @@ const Chat = ({ closeChat }) => {
   const [newMessage, setNewMessage] = useState("");
   const [openfileUpload, setOpenFileUpload] = useState(false);
   const [file, setFile] = useState("");
+  const [uploading, setUploading] = useState(false);
   const toScroll = useRef(null);
 
   // Firebase references
@@ -103,49 +104,58 @@ const Chat = ({ closeChat }) => {
   // Handling file upload
   const handleUploadFile = async (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true); // Start uploading state
+    setOpenFileUpload(true);
+
     const formData = new FormData();
     formData.append("file", file);
 
-    const uploadHealthFile = async () => {
-      try {
-        await axios
-          .post(
-            `${window.$BackEndURL}/api/method/upload_file`,
-            formData
-            // config
-          )
-          .then((response) => {
-            console.log(response);
-            setOpenFileUpload(true);
-            setFile(response?.data?.message);
-            // handleSendFile()
-          });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    await uploadHealthFile();
+    try {
+      // Add placeholder message to Firestore to show loading in chat
+      const tempMessageRef = await addDoc(subcollectionRef, {
+        id: userID,
+        content: "Uploading...",
+        dateTime: serverTimestamp(),
+        is_file: true,
+        file_url: null,
+      });
+
+      // Upload the file
+      const response = await axios.post(
+        `${window.$BackEndURL}/api/method/upload_file`,
+        formData
+      );
+
+      // Update the placeholder message with the actual file URL
+      await updateDoc(tempMessageRef, {
+        content: response?.data?.message?.file_url,
+        loading: false, // Remove loading state
+      });
+
+      setFile("");
+      setOpenFileUpload(false);
+      setUploading(false); // Stop uploading state
+      scrollToBottom();
+    } catch (e) {
+      console.log(e);
+      setUploading(false);
+    }
   };
 
   // Sending uploaded file as a message
   const handleSendFile = async () => {
+    if (!file) return;
     try {
-      await addDoc(subcollectionRef, {
-        id: userID,
-        dateTime: serverTimestamp(),
-        content: file?.file_url,
-        is_file: true,
-      });
-      setFile("");
-      setOpenFileUpload(false);
-      scrollToBottom();
+      await handleUploadFile(); // Handles the file upload
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="fixed bottom-4 right-4 w-[430px] h-[684px] bg-white rounded-lg shadow-lg p-4 z-50 flex flex-col">
+    <div className="fixed lg:bottom-4 lg:right-4 bottom-0 w-[430px] h-[684px] bg-white rounded-lg shadow-lg p-4 z-50 flex flex-col">
       <Toaster richColors={true} />
       <div className="flex items-center justify-between mb-2 border-b pb-2">
         <div className="flex items-center space-x-2">
@@ -183,10 +193,15 @@ const Chat = ({ closeChat }) => {
                 <span>{message.content}</span>
               ) : (
                 <div className="max-w-xs ">
-                <img
-                  src={window.$BackEndURL + message.content}
-                  className="w-full object-cover object-center rounded-md"
-                />
+                  <img
+                    src={
+                      message.content === "Uploading..."
+                        ? image // Placeholder image while uploading
+                        : window.$BackEndURL + message.content
+                    }
+                    className="w-full object-cover object-center rounded-md"
+                    alt="Uploaded file"
+                  />
                 </div>
               )}
             </div>
@@ -218,13 +233,10 @@ const Chat = ({ closeChat }) => {
         </button>
       </div>
 
-      {openfileUpload && (
+      {openfileUpload && uploading && (
         <div className="absolute bottom-2 left-2">
-          <button
-            onClick={handleSendFile}
-            className="bg-green-500 text-white p-2 rounded-md"
-          >
-            Send File
+          <button className="bg-gray-400 text-white p-2 rounded-md">
+            Uploading...
           </button>
         </div>
       )}

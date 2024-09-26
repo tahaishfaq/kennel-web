@@ -9,7 +9,8 @@ import IdentityVerification from "../../components/IdentityVerification";
 import AdoptionTicket from "../../components/AdoptionTicket";
 
 const PuppySummaryPage = () => {
-  const [step, setStep] = useState(1); // Default to step 1
+  const [step, setStep] = useState(1);
+  const [adoptionTicket, setAdoptionTicket] = useState(null);
   const { hashId } = useParams();
   const {
     puppyDetails,
@@ -21,39 +22,61 @@ const PuppySummaryPage = () => {
     setIdentityVerification,
     identityVerification,
     setBusinessProfile,
-    businessProfile
+    businessProfile,
   } = useAdoption();
 
-  useEffect(() => {
+  // Function to re-fetch the adoption ticket
+  const fetchAdoptionTicket = () => {
     try {
       axios
         .get(`${window.$BackEndURL}/api/method/get-ticket?hash=${hashId}`)
         .then((response) => {
           const data = response?.data?.data;
           console.log(data);
-          
-          // Set the data in context
+          setAdoptionTicket(data);
           setPuppyDetails(data?.puppy);
           setCustomerOfAdoption(data?.customer);
           setTicketId(data?.name);
-          setIdentityVerification(data?.stripe_verification?.verification_status);
+          setIdentityVerification(
+            data?.stripe_verification?.verification_status
+          );
           setBusinessProfile(data?.kennel);
 
-          // If identity is already verified, set initial step to 2
           if (data?.stripe_verification?.verification_status === "verified") {
             setStep(2); // Skip verification step
           }
-
         });
     } catch (error) {
       console.error("Error fetching adoption ticket details:", error);
     }
-  }, [hashId, setPuppyDetails, setCustomerOfAdoption, setTicketId, setIdentityVerification, setBusinessProfile]);
+  };
+
+  // UseEffect to fetch ticket data on initial load
+  useEffect(() => {
+    fetchAdoptionTicket();
+  }, [
+    hashId,
+    setPuppyDetails,
+    setCustomerOfAdoption,
+    setTicketId,
+    setIdentityVerification,
+    setBusinessProfile,
+  ]);
 
   return (
     <div className="pb-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[#000000] text-[22px] sm:text-[24px] lg:text-[28px] font-medium mt-6 mb-6 text-center sm:text-left font-semibold">
+            Adoption Ticket
+          </h2>
+          <span className="text-xs font-medium text-[#1877F2] bg-[#1877F214] px-3 py-1 rounded-full sm:px-4 sm:py-2">
+            {adoptionTicket?.status}
+          </span>
+        </div>
+      </div>
       <PuppySummary puppyDetails={puppyDetails} />
-      
+
       {/* Render different steps based on state */}
       {step === 1 && (
         <IdentityVerification
@@ -73,7 +96,11 @@ const PuppySummaryPage = () => {
         />
       )}
       <div>
-        <AdoptionTicket />
+        {/* Pass the fetchAdoptionTicket function to re-fetch when status changes */}
+        <AdoptionTicket
+          adoptionTicket={adoptionTicket}
+          onStatusChange={fetchAdoptionTicket}
+        />
       </div>
     </div>
   );

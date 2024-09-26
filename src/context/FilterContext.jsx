@@ -18,7 +18,7 @@ export const FilterProvider = ({ children }) => {
   const [goHomeDate, setGoHomeDate] = useState("");
   const [puppies, setPuppies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState(`[["publishing_status", "=", "Approved"]]`);
   // Function to apply filters and fetch data
 
   const applyFilters = () => {
@@ -40,25 +40,29 @@ export const FilterProvider = ({ children }) => {
       filters.push(["go_home_date", "=", goHomeDate]);
     }
 
-    const filterQuery =
-      filters.length > 0
-        ? `?filters=${encodeURIComponent(JSON.stringify(filters))}`
-        : "";
+    const publishFilter = [["publishing_status", "=", "Approved"]];
 
-    setQuery(filterQuery)    
     
-  };
+    const combinedFilters =
+      filters.length > 0
+        ? publishFilter.concat(filters) 
+        : query; 
 
- 
+    // Generate query
+    const filterQuery = `${encodeURIComponent(
+      JSON.stringify(combinedFilters)
+    )}`;
+    setQuery(filterQuery);
+  };
 
   // Fetch data initially
   useEffect(() => {
     setLoading(true);
     try {
       axios
-        .get(`${window.$BackEndURL}/api/method/get-pups${query}`)
+        .get(`${window.$BackEndURL}/api/method/get-pups?filters=${query}`)
         .then((res) => {
-          console.log("Puppies",res?.data?.data);
+          console.log("Puppies", res?.data?.data);
           setPuppies(res.data.data);
           setLoading(false);
         })
@@ -76,11 +80,9 @@ export const FilterProvider = ({ children }) => {
     setColor("");
     setSelectedSize("");
     setGoHomeDate("");
-    setQuery("")
+    // setQuery("");
     applyFilters();
-    
   };
-  
 
   return (
     <FilterContext.Provider
@@ -99,7 +101,7 @@ export const FilterProvider = ({ children }) => {
         loading,
         applyFilters,
         clearFilters,
-        setQuery
+        setQuery,
       }}
     >
       {children}

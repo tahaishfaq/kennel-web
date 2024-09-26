@@ -119,7 +119,7 @@ const FilterBar = () => {
           <button
             onClick={() => {
               clearFilters();
-              setQuery("");
+              setQuery(`[["publishing_status", "=", "Approved"]]`);
             }}
             type="button"
             className="bg-black text-white px-4 py-3 rounded-lg"
