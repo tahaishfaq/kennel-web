@@ -13,19 +13,14 @@ import excellence from "../assets/excellence.png";
 import medal from "../assets/medal 1.png";
 import vector from "../assets/Vector.png";
 import vector1 from "../assets/Vector (1).png";
-import TalkToBreederPopover from './TalkToBreederPopover';
-
+import TalkToBreederPopover from "./TalkToBreederPopover";
 
 const PuppyDetail = ({ puppyDetail }) => {
-
-
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const handleButtonClick = () => {
     setIsPopoverOpen(!isPopoverOpen);
   };
-
-
 
   return (
     <div className="lg:p-6 p-3">
@@ -74,7 +69,8 @@ const PuppyDetail = ({ puppyDetail }) => {
                     Location
                   </p>
                   <p className="text-[#000000CC] font-medium text-sm">
-                    Akshay Nagar 1st Block 1st Cross, Rammurthy Nagar, Bangalore, 560016
+                    Akshay Nagar 1st Block 1st Cross, Rammurthy Nagar,
+                    Bangalore, 560016
                   </p>
                 </div>
               </div>
@@ -99,7 +95,8 @@ const PuppyDetail = ({ puppyDetail }) => {
                       Weight:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      {puppyDetail?.weight}{puppyDetail?.weight_unit}
+                      {puppyDetail?.weight}
+                      {puppyDetail?.weight_unit}
                     </span>
                   </p>
                   <p className="flex items-center">
@@ -220,7 +217,11 @@ const PuppyDetail = ({ puppyDetail }) => {
                       <img src={embarck} alt="Embark" className="h-8 lg:h-10" />
                     </div>
                     <div className="border rounded-lg p-2">
-                      <img src={genetics} alt="genetics" className="h-8 lg:h-10" />
+                      <img
+                        src={genetics}
+                        alt="genetics"
+                        className="h-8 lg:h-10"
+                      />
                     </div>
                   </div>
                 </div>
@@ -230,7 +231,11 @@ const PuppyDetail = ({ puppyDetail }) => {
               <div className="mt-6 flex flex-col lg:flex-row gap-4 lg:gap-8 bg-[#0000000A] p-2 lg:p-4 rounded-md">
                 <div className="flex flex-col items-start w-full lg:w-1/2 border-r-2 border-dotted pr-4">
                   <div className="flex items-start gap-2">
-                    <img src={excellence} alt="Excellence" className="h-6 lg:h-8" />
+                    <img
+                      src={excellence}
+                      alt="Excellence"
+                      className="h-6 lg:h-8"
+                    />
                     <div className="flex flex-col">
                       <p className="text-[#000000] font-medium text-lg lg:text-xl">
                         Champions of Excellence
@@ -244,19 +249,31 @@ const PuppyDetail = ({ puppyDetail }) => {
 
                 <div className="flex justify-around w-full lg:w-1/2">
                   <div className="flex flex-col items-center">
-                    <img src={medal} alt="AKC Register" className="h-6 lg:h-8" />
+                    <img
+                      src={medal}
+                      alt="AKC Register"
+                      className="h-6 lg:h-8"
+                    />
                     <span className="text-[#000000] font-normal text-xs lg:text-sm">
                       AKC Register
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <img src={vector} alt="Potty Trained" className="h-6 lg:h-8" />
+                    <img
+                      src={vector}
+                      alt="Potty Trained"
+                      className="h-6 lg:h-8"
+                    />
                     <span className="text-[#000000] font-normal text-xs lg:text-sm">
                       Potty Trained
                     </span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <img src={vector1} alt="Champion Bloodline" className="h-6 lg:h-8" />
+                    <img
+                      src={vector1}
+                      alt="Champion Bloodline"
+                      className="h-6 lg:h-8"
+                    />
                     <span className="text-[#000000] font-normal text-xs lg:text-sm text-center">
                       Champion Bloodline
                     </span>
@@ -269,12 +286,13 @@ const PuppyDetail = ({ puppyDetail }) => {
           {/* Right Side - Actions */}
           <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
             <div className="bg-[#E8E7E5] py-4 px-4 border rounded-md">
-              <button className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4"  onClick={handleButtonClick} >
+              <button
+                className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4"
+                onClick={handleButtonClick}
+              >
                 <MdOutlineMessage className="mr-2" /> Talk to Breeder
               </button>
-              {isPopoverOpen && (
-          <TalkToBreederPopover />
-        )}
+              {isPopoverOpen && <TalkToBreederPopover puppyDetail={puppyDetail}/>}
 
               <button className="w-full flex items-center text-[#000000] font-medium text-base lg:text-lg justify-center border border-black px-4 py-2 rounded-md">
                 Take me home
