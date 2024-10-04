@@ -8,10 +8,11 @@ import { FaRegAddressCard } from "react-icons/fa6";
 
 const PuppySummary = ({ puppyDetails }) => {
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6">
-      <h2 className="text-[28px] font-normal mb-4">Puppy Summary</h2>
+    <div className="max-w-7xl mx-auto p-4 sm:p-6">
+      <h2 className="text-2xl font-medium mb-4">Puppy Summary</h2>
 
       <div className="bg-[#0000000A] rounded-lg">
+        <div className="flex flex-row gap-x-8 mr-8 ">
         {/* Puppy Images */}
         <div className="flex flex-col sm:flex-row sm:gap-4 gap-2 p-4 justify-center">
           {puppyDetails?.images?.map((image, index) => (
@@ -19,15 +20,19 @@ const PuppySummary = ({ puppyDetails }) => {
               key={index}
               src={window.$BackEndURL + image?.image}
               alt={`Puppy ${index + 1}`}
-              className="w-full sm:w-40 h-40 object-cover object-center rounded-lg"
+              className="w-[227px] sm:w-40 h-[219px] object-cover object-center rounded-md"
             />
           ))}
         </div>
 
         {/* Puppy Details */}
-        <div className="flex justify-center items-center rounded-md p-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 w-full">
-            <div className="flex flex-col space-y-2 border-dotted sm:border-r border-[#000000A3] pr-0 sm:pr-4 lg:pr-6">
+        <div className="flex flex-col justify-center rounded-md p-4">
+          <div className=" mb-3 ">
+          <span className="text-[#000000] text-2xl font-medium">Puppy Name</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 w-[910px]">
+            
+            <div className="flex flex-col  space-y-2 border-dotted sm:border-r border-[#000000A3] pr-0 sm:pr-4 lg:pr-6">
               <p className="flex items-center">
                 <TbClockRecord className="text-lg sm:text-xl lg:text-2xl text-[#000000] mr-2" />
                 <span className="font-normal text-sm text-[#000000CC]">
@@ -119,8 +124,10 @@ const PuppySummary = ({ puppyDetails }) => {
           </div>
         </div>
 
+        </div>
+
         {/* About Puppy */}
-        <div className="bg-gray-100 p-4 rounded-lg">
+        {/* <div className="bg-gray-100 p-4 rounded-lg">
           <h3 className="text-[#000000CC] text-lg font-semibold mb-2 mt-7 text-center sm:text-left">
             About Puppy
           </h3>
@@ -130,7 +137,7 @@ const PuppySummary = ({ puppyDetails }) => {
             to live with them forever, so I must make sure that I choose the
             right one! I am told that I am very smart, sweet, and playful.
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

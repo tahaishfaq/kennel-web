@@ -7,6 +7,7 @@ import { useAdoption } from "../../context/AdoptionContext";
 import axios from "axios";
 import IdentityVerification from "../../components/IdentityVerification";
 import AdoptionTicket from "../../components/AdoptionTicket";
+import PaymentOptions from "../../components/PaymentOptions";
 
 const PuppySummaryPage = () => {
   const [step, setStep] = useState(1);
@@ -65,7 +66,7 @@ const PuppySummaryPage = () => {
 
   return (
     <div className="pb-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      {/* <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between">
           <h2 className="text-[#000000] text-[22px] sm:text-[24px] lg:text-[28px] font-medium mt-6 mb-6 text-center sm:text-left font-semibold">
             Adoption Ticket
@@ -74,8 +75,10 @@ const PuppySummaryPage = () => {
             {adoptionTicket?.status}
           </span>
         </div>
-      </div>
-      <PuppySummary puppyDetails={puppyDetails} />
+      </div> */}
+      <PuppySummary puppyDetails={puppyDetails} />  
+
+      <PaymentOptions />
 
       {/* Render different steps based on state */}
       {step === 1 && (
@@ -102,6 +105,10 @@ const PuppySummaryPage = () => {
           onStatusChange={fetchAdoptionTicket}
         />
       </div>
+
+
+
+      
     </div>
   );
 };
