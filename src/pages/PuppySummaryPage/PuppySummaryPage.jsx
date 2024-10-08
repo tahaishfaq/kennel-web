@@ -8,9 +8,19 @@ import axios from "axios";
 import IdentityVerification from "../../components/IdentityVerification";
 import AdoptionTicket from "../../components/AdoptionTicket";
 import PaymentOptions from "../../components/PaymentOptions";
+import Chat from "../../components/Chat";
+import { BiMessageDetail } from "react-icons/bi";
+import PaymentSelection from "../../components/PaymentSelection";
 
 const PuppySummaryPage = () => {
-  const [step, setStep] = useState(1);
+  const [showChat, setShowChat] = useState(false);
+  const handleChatToggle = () => setShowChat(true);
+  const closeChat = () => setShowChat(false);
+
+
+
+
+  // const [step, setStep] = useState(1);
   const [adoptionTicket, setAdoptionTicket] = useState(null);
   const { hashId } = useParams();
   const {
@@ -24,6 +34,7 @@ const PuppySummaryPage = () => {
     identityVerification,
     setBusinessProfile,
     businessProfile,
+    step
   } = useAdoption();
 
   // Function to re-fetch the adoption ticket
@@ -43,9 +54,9 @@ const PuppySummaryPage = () => {
           );
           setBusinessProfile(data?.kennel);
 
-          if (data?.stripe_verification?.verification_status === "verified") {
-            setStep(2); // Skip verification step
-          }
+          // if (data?.stripe_verification?.verification_status === "verified") {
+          //   setStep(2); 
+          // }
         });
     } catch (error) {
       console.error("Error fetching adoption ticket details:", error);
@@ -76,22 +87,15 @@ const PuppySummaryPage = () => {
           </span>
         </div>
       </div> */}
-      <PuppySummary puppyDetails={puppyDetails} />  
+      <PuppySummary puppyDetails={puppyDetails} />
 
-      <PaymentOptions />
+      {step === 1 &&
+        <PaymentOptions />
+      }
 
-      {/* Render different steps based on state */}
-      {step === 1 && (
-        <IdentityVerification
-          identityVerification={identityVerification}
-          businessProfile={businessProfile}
-          ticketId={ticketId}
-          customer={customerDetails}
-          onContinue={() => setStep(2)} // Move to step 2 once verification is done
-        />
-      )}
-      {step === 2 && <CustomerStep1 onContinue={() => setStep(3)} />}
-      {step === 3 && (
+      {step === 2 && <CustomerStep1 />}
+      {step === 3 && <PaymentSelection />}
+      {step === 4 && (
         <CustomerStep2
           puppyDetails={puppyDetails}
           ticketId={ticketId}
@@ -99,7 +103,6 @@ const PuppySummaryPage = () => {
         />
       )}
       <div>
-        {/* Pass the fetchAdoptionTicket function to re-fetch when status changes */}
         <AdoptionTicket
           adoptionTicket={adoptionTicket}
           onStatusChange={fetchAdoptionTicket}
@@ -107,8 +110,32 @@ const PuppySummaryPage = () => {
       </div>
 
 
+      <div className="fixed bottom-4 right-4">
+        <button
+          type="button"
+          className="flex items-center bg-[#3056D3] text-white p-4 rounded-full"
+          onClick={handleChatToggle}
+        >
+          <BiMessageDetail className="" />
 
-      
+        </button>
+      </div>
+
+      {showChat && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black bg-opacity-50"
+            onClick={closeChat}
+          />
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <Chat closeChat={closeChat} />
+          </div>
+        </>
+      )}
+
+
+
+
     </div>
   );
 };

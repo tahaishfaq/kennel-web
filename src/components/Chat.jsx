@@ -155,9 +155,9 @@ const Chat = ({ closeChat }) => {
   };
 
   return (
-    <div className="fixed lg:bottom-4 lg:right-4 bottom-0 w-[430px] h-[684px] bg-white rounded-lg shadow-lg p-4 z-50 flex flex-col">
+    <div className="fixed lg:bottom-4 lg:right-4 bottom-0 w-full lg:w-[430px] h-[684px] bg-white rounded-lg shadow-lg p-4 z-50 flex flex-col">
       <Toaster richColors={true} />
-      <div className="flex items-center justify-between mb-2 border-b pb-2">
+      <div className="flex items-center justify-between lg:my-0 my-2  border-b pb-2">
         <div className="flex items-center space-x-2">
           <img src={image} alt="Seller" className="w-10 h-10 rounded-full" />
           <span className="font-semibold text-lg">Seller Name</span>

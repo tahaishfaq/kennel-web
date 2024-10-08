@@ -11,57 +11,106 @@ export const AdoptionProvider = ({ children }) => {
   const [customerDetails, setCustomerDetails] = useState(null);
   const [ticketId, setTicketId] = useState(null);
   const [identityVerification, setIdentityVerification] = useState("");
-  const [businessProfile, setBusinessProfile] = useState(null)
+  const [businessProfile, setBusinessProfile] = useState(null);
   const [step, setStep] = useState(1);
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(""); // New state for payment option
+  const [clientSecret, setClientSecret] = useState(null); // To manage payment client secret
+  const [isLoading, setIsLoading] = useState(false); // To track loading state
 
+  // Step management
   const nextStep = () => setStep((prevStep) => prevStep + 1);
-
   const prevStep = () => setStep((prevStep) => prevStep - 1);
 
+  // Submit customer details to the backend and handle Stripe customer creation
   const submitCustomerDetails = async (values) => {
     try {
       const response = await axios.put(
         `${window.$BackEndURL}/api/resource/Website Customer/${customerofAdoption?.name}`,
         values
       );
+
       console.log("customer", response?.data?.data);
       setCustomerDetails(response?.data?.data);
-      await handleStripeCustomer(response?.data?.data?.name);
+
+      const stripeResult = await handleStripeCustomer(response?.data?.data?.name);
+
+      if (stripeResult.success) {
+        return {
+          success: true,
+          data: stripeResult,
+        };
+      } else {
+        return {
+          success: false,
+          data: stripeResult.error,
+        };
+      }
     } catch (error) {
       console.error("Error submitting customer details", error);
+      return {
+        success: false,
+        data: error,
+      };
     }
   };
 
+  // Handle Stripe customer creation
   const handleStripeCustomer = async (name) => {
-    const json = {
-      website_customer: name,
-    };
+    const json = { website_customer: name };
     try {
-      axios
-        .post(
-          `https://primary.kennelboss.app/api/method/kennelboss.stcustomer.create_stcustomer`,
-          json
-        )
-        .then((res) => {
-          console.log("Stripe Customer", res?.data?.message);
-          console.log("Stripe Customer", res?.data?.message.stripe_customer);
-          localStorage.setItem(
-            "customerDetails",
-            JSON.stringify(res?.data?.message)
-          );
-          setCustomerDetails(res?.data?.message);
-        });
+      const res = await axios.post(
+        `https://primary.kennelboss.app/api/method/kennelboss.stcustomer.create_stcustomer`,
+        json
+      );
+      console.log("Stripe Customer", res?.data?.message);
+      localStorage.setItem("customerDetails", JSON.stringify(res?.data?.message));
+      setCustomerDetails(res?.data?.message);
+
+      return {
+        success: true,
+        message: "Stripe customer created successfully",
+        data: res,
+      };
     } catch (error) {
-      console.log(error);
+      console.error("Error creating Stripe customer", error);
+      return {
+        success: false,
+        message: "Failed to create Stripe customer",
+        data: error,
+      };
     }
   };
 
+  // Handle payment creation (moved from component to context)
+  // const handlePayment = async (ticketId, amount) => {
+  //   setIsLoading(true);
+  //   const json = {
+  //     adoption_ticket: ticketId,
+  //     amount: amount,
+  //   };
+
+  //   try {
+  //     const res = await axios.post(
+  //       "https://primary.kennelboss.app/api/method/kennelboss.stpayments.create_payment_intent",
+  //       json
+  //     );
+  //     console.log("Stripe payment intent response", res);
+  //     setClientSecret(res?.data?.message?.client_secret);
+  //     nextStep()
+  //   } catch (error) {
+  //     console.error("Error creating payment intent", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // Load customer details from localStorage when component mounts
   useEffect(() => {
     const storedCustomerDetails = localStorage.getItem("customerDetails");
     if (storedCustomerDetails) {
       setCustomerDetails(JSON.parse(storedCustomerDetails));
     }
-  }, [localStorage]);
+  }, []);
 
   return (
     <AdoptionContext.Provider
@@ -80,7 +129,12 @@ export const AdoptionProvider = ({ children }) => {
         setIdentityVerification,
         identityVerification,
         setBusinessProfile,
-        businessProfile
+        businessProfile,
+        selectedPaymentOption,
+        setSelectedPaymentOption,
+        clientSecret,
+        isLoading,
+        
       }}
     >
       {children}
