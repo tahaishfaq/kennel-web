@@ -7,7 +7,10 @@ import {
   collection,
   query,
   onSnapshot,
+  where,
   orderBy,
+  getDocs,
+  setDoc,
   addDoc,
   serverTimestamp,
   updateDoc,
@@ -16,7 +19,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
 
-const Chat = ({ closeChat }) => {
+const Chat = ({ closeChat, businessProfile }) => {
   const { hashId } = useParams();
   const [hashData, setHashData] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -37,6 +40,7 @@ const Chat = ({ closeChat }) => {
       axios
         .get(`${window.$BackEndURL}/api/method/get-ticket?hash=${hashId}`)
         .then((res) => {
+          console.log("ticket", res?.data?.data);
           setHashData(res?.data?.data);
           setUserID(res?.data?.data?.customer?.name);
         });
@@ -74,23 +78,84 @@ const Chat = ({ closeChat }) => {
     scrollToBottom();
   }, [messages]);
 
+  const sendFirebaseNotification = async (messageContent) => {
+    const dataObject = {
+      title: "New Message",
+      message: messageContent,
+      token: hashData?.device_id,
+      type: "chat",
+      object: "",
+    };
+
+    try {
+      await axios
+        .post(
+          `${
+            window.$BackEndURL
+          }/api/method/kennelboss.push_notification.send_firebase_notification?data=${encodeURIComponent(
+            JSON.stringify(dataObject)
+          )}`
+        )
+        .then((res) => {
+          console.log(res);
+          console.log("Notification sent successfully");
+        });
+    } catch (error) {
+      console.error("Error sending notification: ", error);
+    }
+  };
+
   // Sending a message
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") {
-      toast.error("Enter valid message!");
+      toast.error("Enter a valid message!");
       return;
     }
+
     try {
+      const parentDocRef2 = doc(db, "Chats", `${hashData?.kennel?.name}`);
+      const subcollectionRef2 = collection(parentDocRef2, "Chat");
+
+      // Query to check if a document with the same chat_room already exists
+      const chatQuery = query(
+        subcollectionRef2,
+        where("chat_room", "==", hashData?.name)
+      );
+
+      // Execute the query
+      const querySnapshot = await getDocs(chatQuery);
+
+      if (querySnapshot.empty) {
+        // If no document matches the chat_room, create a new one with Firebase-generated ID
+        await addDoc(subcollectionRef2, {
+          last_seen: new Date(),
+          user: hashData?.kennel?.name,
+          chat_room: hashData?.name,
+          ticket: hashData?.name,
+          label: "",
+          category: "",
+          last_message: newMessage,
+          last_message_time: new Date(),
+          is_file: false,
+        });
+        console.log("Chatroom successfully created!");
+      } else {
+        console.log("Chatroom already exists, no need to create.");
+      }
+
       await addDoc(subcollectionRef, {
         id: userID,
         content: newMessage,
         dateTime: serverTimestamp(),
         is_file: false,
       });
+
+      sendFirebaseNotification(newMessage);
+
       setNewMessage("");
       scrollToBottom();
     } catch (error) {
-      console.log(error);
+      console.error("Error sending message: ", error);
     }
   };
 
@@ -148,26 +213,36 @@ const Chat = ({ closeChat }) => {
   const handleSendFile = async () => {
     if (!file) return;
     try {
-      await handleUploadFile(); // Handles the file upload
+      await handleUploadFile();
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="fixed lg:bottom-4 lg:right-4 bottom-0 w-full lg:w-[430px] h-[684px] bg-white rounded-lg shadow-lg p-4 z-50 flex flex-col">
+    <div className="fixed lg:bottom-4 lg:right-4 bottom-0 w-full lg:w-[430px] h-[684px] bg-white rounded-lg shadow-lg py-4 pl-4 pr-2 z-50 flex flex-col">
       <Toaster richColors={true} />
       <div className="flex items-center justify-between lg:my-0 my-2  border-b pb-2">
         <div className="flex items-center space-x-2">
-          <img src={image} alt="Seller" className="w-10 h-10 rounded-full" />
-          <span className="font-semibold text-lg">Seller Name</span>
+          <img
+            src={
+              businessProfile?.logo
+                ? window.$BackEndURL + businessProfile?.logo
+                : image
+            }
+            alt="Seller"
+            className="w-10 h-10 rounded-full"
+          />
+          <span className="font-semibold text-lg">
+            {businessProfile?.business_name}
+          </span>
         </div>
         <button onClick={closeChat} className="text-gray-500">
           <IoClose size={20} />
         </button>
       </div>
 
-      <div className="flex-grow overflow-y-auto mb-2" ref={toScroll}>
+      <div className="flex-grow overflow-y-auto mb-2 pr-3" ref={toScroll}>
         {messages?.map((message, index) => (
           <div
             key={index}
@@ -176,17 +251,17 @@ const Chat = ({ closeChat }) => {
             }`}
           >
             <div
-              className={`font-semibold ${
+              className={`font-semibold capitalize ${
                 message.id === userID ? "text-blue-800" : "text-gray-800"
               }`}
             >
-              {message.id === userID ? "You" : "Seller"}
+              {message.id === userID ? "Me" : businessProfile?.business_name}
             </div>
             <div
-              className={`mt-1 p-2 rounded-lg flex items-end justify-end ${
+              className={`mt-1 p-2  flex items-end  ${
                 message.id === userID
-                  ? "bg-blue-200 text-blue-800"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-blue-200 text-blue-800 justify-end rounded-tl-lg rounded-bl-lg rounded-br-lg"
+                  : "bg-gray-200 text-gray-800 justify-start rounded-tr-lg rounded-br-lg rounded-bl-lg"
               }`}
             >
               {!message.is_file ? (
@@ -199,7 +274,7 @@ const Chat = ({ closeChat }) => {
                         ? image // Placeholder image while uploading
                         : window.$BackEndURL + message.content
                     }
-                    className="w-full object-cover object-center rounded-md"
+                    className="w-40 h-40 object-cover object-center rounded-md"
                     alt="Uploaded file"
                   />
                 </div>

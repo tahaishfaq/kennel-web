@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import { useAdoption } from "../context/AdoptionContext";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import PaymentDetails from "./PaymentDetails";
 
-
-const PaymentOptions = () => {
+const PaymentOptions = ({ adoptionTicket }) => {
   const {
     puppyDetails,
     selectedPaymentOption,
     setSelectedPaymentOption,
-    nextStep
+    nextStep,
   } = useAdoption();
 
   const handleSelection = (option) => {
     setSelectedPaymentOption(option);
   };
-
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 flex lg:flex-row flex-col items-start gap-y-6 gap-x-6">
@@ -62,11 +61,14 @@ const PaymentOptions = () => {
         <div className="flex justify-end mt-6">
           <button
             className="bg-[#3056D3] text-white px-4 py-2 rounded-md"
-          onClick={nextStep}
+            onClick={nextStep}
           >
             Continue
           </button>
         </div>
+      </div>
+      <div className="lg:w-1/3 w-full">
+        <PaymentDetails adoptionTicket={adoptionTicket} />
       </div>
     </div>
   );

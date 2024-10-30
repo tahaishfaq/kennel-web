@@ -1,14 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import picture from "../assets/Frame 1000004378.png";
 import { LuPenSquare } from "react-icons/lu";
+import { IoCloseSharp } from "react-icons/io5";
+import { ClipLoader, PuffLoader } from "react-spinners";
 
-const TalkToBreederPopover = ({ puppyDetail }) => {
-  const [isOpen, setIsOpen] = useState(true);
+const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Formik setup
+  // Fetch countries on component mount
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(
+          "https://countriesnow.space/api/v0.1/countries/states"
+        );
+        const countryList = response.data.data.map((country) => country.name);
+        setCountries(countryList);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  // Fetch states based on selected country
+  const fetchStates = async (country) => {
+    try {
+      const response = await axios.post(
+        "https://countriesnow.space/api/v0.1/countries/states",
+        {
+          country: country,
+        }
+      );
+      const stateList = response.data.data.states.map((state) => state.name);
+      setStates(stateList);
+    } catch (error) {
+      console.error("Error fetching states:", error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -31,6 +67,7 @@ const TalkToBreederPopover = ({ puppyDetail }) => {
       message: Yup.string().required("Message is required"),
     }),
     onSubmit: async (values) => {
+      setLoading(true);
       try {
         const json = {
           first_name: values.first_name,
@@ -40,10 +77,13 @@ const TalkToBreederPopover = ({ puppyDetail }) => {
           country: values.country,
           state: values.state,
           message: values.message,
-          puppy_owner: puppyDetail?.business_profile,
+          puppy_owner: puppyDetail?.business_profile?.name,
           puppy: puppyDetail?.name,
         };
-        const response = await axios.post(`${window.$BackEndURL}/api/resource/Breeder Queries`, json);
+        const response = await axios.post(
+          `${window.$BackEndURL}/api/resource/Breeder Queries`,
+          json
+        );
         console.log("Form submitted successfully:", response.data);
 
         setTimeout(() => {
@@ -51,6 +91,8 @@ const TalkToBreederPopover = ({ puppyDetail }) => {
         }, 500);
       } catch (error) {
         console.error("There was an error submitting the form:", error);
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -61,205 +103,194 @@ const TalkToBreederPopover = ({ puppyDetail }) => {
         isOpen ? "" : "hidden"
       } bg-gray-900 bg-opacity-60 z-50`}
     >
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl">
-        <div className="flex justify-between items-start">
-          <h2 className=" text-[#000000] text-2xl font-medium mb-4">
-            Talk to Breeder
+      <div className="bg-white sm:p-6 p-4 rounded-lg shadow-lg w-full max-w-4xl h-full sm:h-auto overflow-y-auto">
+        <div className="flex justify-between items-start mb-4">
+          <h2 className="text-black text-2xl font-medium">
+            Talk to {puppyDetail?.business_profile?.business_name}
           </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="text-[#000000] hover:text-gray-600"
+            className="text-black hover:text-gray-600"
           >
-            &times;
+            <IoCloseSharp className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Left Section - Image and Info */}
-          <div className=" bg-[#0000000A] h-[410px] p-4 rounded-md flex flex-col w-full md:w-1/3">
+        <div className="flex flex-col sm:flex-row gap-8">
+          <div className="bg-gray-100 p-4 rounded-md flex flex-col w-full sm:w-1/3">
             <img
-              src={picture}
+              src={
+                puppyDetail?.profile_picture
+                  ? window.$BackEndURL + puppyDetail?.profile_picture
+                  : picture
+              }
               alt="Dog"
-              className="rounded-lg w-[283px] h-[303px] mb-3"
+              className="rounded-lg w-full h-[250px] sm:h-[303px] mb-3 object-cover object-center"
             />
-            <div className="justify-start items-start text-start ">
-              <h3 className="text-xl font-medium text-[#000000] mb-2">
-                Female Princes
+            <div className="text-start">
+              <h3 className="text-xl font-medium text-black mb-2">
+                {puppyDetail?.puppy_name}
               </h3>
-              <p className="text-[#000000] text-sm font-normal">Information</p>
+              <p className="text-black text-sm font-normal">
+                {puppyDetail?.size}
+              </p>
             </div>
           </div>
 
-          {/* Right Section - Form */}
-          <div className="w-full md:w-2/3">
-            <h3 className=" text-[#000000] text-2xl font-medium mb-1">
-              Ask about Female Princes
+          <div className="w-full sm:w-2/3">
+            <h3 className="text-black text-2xl font-medium mb-4">
+              Ask about {puppyDetail?.puppy_name}
             </h3>
-            <p className="text-[#000000] text-sm font-normal mt-2 mb-6">
-              Lorem ipsum dolor sit amet consectetur. Vulputate porta lorem ut
-              justo sed. Vitae consequat quis magnis accumsan. Nec venenatis
-              massa odio pharetra sed purus purus aliquam sed.
-            </p>
 
-            <form onSubmit={formik.handleSubmit} className="space-y-4">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 overflow-y-auto max-h-[400px] sm:max-h-[none]"
+            >
               {/* First Name and Last Name */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-col gap-y-1 w-full">
                   <input
                     type="text"
                     name="first_name"
                     placeholder="First Name"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.first_name}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.first_name ? (
+                  {formik.errors.first_name && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.first_name}
                     </div>
-                  ) : null}
+                  )}
                 </div>
                 <div className="flex flex-col gap-y-1 w-full">
                   <input
                     type="text"
                     name="last_name"
                     placeholder="Last Name"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.last_name}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.last_name ? (
+                  {formik.errors.last_name && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.last_name}
                     </div>
-                  ) : null}
+                  )}
                 </div>
               </div>
 
               {/* Email and Phone Number */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-col gap-y-1 w-full">
                   <input
                     type="email"
                     name="email"
                     placeholder="Email Address"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.email ? (
+                  {formik.errors.email && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.email}
                     </div>
-                  ) : null}
+                  )}
                 </div>
                 <div className="flex flex-col gap-y-1 w-full">
                   <input
                     type="tel"
                     name="phone_number"
                     placeholder="Phone Number"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.phone_number}
                     onChange={formik.handleChange}
                   />
-                  {formik.errors.phone_number ? (
+                  {formik.errors.phone_number && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.phone_number}
                     </div>
-                  ) : null}
+                  )}
                 </div>
               </div>
 
               {/* Country and State */}
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex flex-col gap-y-1 w-full">
                   <select
                     name="country"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.country}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      fetchStates(e.target.value);
+                    }}
                   >
                     <option disabled value="">
-                      Country
+                      Select Country
                     </option>
-                    <option>USA</option>
-                    <option>Canada</option>
+                    {countries.map((country, index) => (
+                      <option key={index} value={country}>
+                        {country}
+                      </option>
+                    ))}
                   </select>
-                  {formik.errors.country ? (
+                  {formik.errors.country && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.country}
                     </div>
-                  ) : null}
+                  )}
                 </div>
                 <div className="flex flex-col gap-y-1 w-full">
                   <select
                     name="state"
-                    className="w-full p-3 border border-gray-300 rounded-lg text-[#99A2A5]"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     value={formik.values.state}
                     onChange={formik.handleChange}
+                    disabled={!formik.values.country}
                   >
                     <option disabled value="">
-                      State
+                      Select State
                     </option>
-                    <option>New York</option>
-                    <option>California</option>
+                    {states.map((state, index) => (
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
+                    ))}
                   </select>
-                  {formik.errors.state ? (
+                  {formik.errors.state && (
                     <div className="text-red-500 text-sm">
                       {formik.errors.state}
                     </div>
-                  ) : null}
+                  )}
                 </div>
               </div>
 
-              {/* Message */}
-              <div className="flex flex-col gap-y-1">
-                <div className="relative w-full flex justify-center items-center">
-                  <LuPenSquare className="absolute left-4 top-3 text-gray-400" />
-                  <textarea
-                    name="message"
-                    rows="4"
-                    placeholder="Type your message"
-                    className="w-full pl-10 p-3 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
-                    value={formik.values.message}
-                    onChange={formik.handleChange}
-                  ></textarea>
-                </div>
-                {formik.errors.message ? (
+              <div className="flex flex-col gap-y-1 w-full">
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="Write your message here"
+                  className="w-full p-3 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
+                  value={formik.values.message}
+                  onChange={formik.handleChange}
+                ></textarea>
+                {formik.errors.message && (
                   <div className="text-red-500 text-sm">
                     {formik.errors.message}
                   </div>
-                ) : null}
+                )}
               </div>
 
-              {/* Puppy Owner */}
-              {/* <div className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="puppy_owner"
-                  className="form-radio h-5 w-5 text-black border-black focus:ring-black checked:bg-black"
-                  checked={formik.values.puppy_owner}
-                  onChange={() =>
-                    formik.setFieldValue(
-                      "puppy_owner",
-                      !formik.values.puppy_owner
-                    )
-                  }
-                />
-                <p className="text-[#212B36] text-xs font-normal">
-                  Puppy Owner
-                </p>
-              </div> */}
-
-              <p className="text-base font-normal text-[#000000] mb-6">
+              {/* <p className="text-base font-normal text-[#000000] mb-6">
                 Accept our Terms & Conditions
-              </p>
+              </p> */}
 
               <button
                 type="submit"
-                className="py-3 px-16 bg-black text-white  rounded-lg"
+                className=" bg-black text-white rounded-lg px-12 py-3 flex items-center"
               >
-                Send
+                {loading ? <ClipLoader color="white" size={20} /> : "Send"}
               </button>
             </form>
           </div>

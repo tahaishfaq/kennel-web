@@ -7,8 +7,8 @@ import SkeletonPuppyCard from "./SkeletonPuppyCard";
 
 const ExploreBreed = () => {
   const skeletonCount = 6;
-  const [breed, setBreed] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [breed, setBreed] = useState([]);
 
   useEffect(() => {
     try {
@@ -26,12 +26,12 @@ const ExploreBreed = () => {
   }, []);
 
   return (
-    <div className="py-6 space-y-6 ">
+    <div className="lg:py-6 md:py-5 py-4 lg:space-y-6 space-y-4 mx-auto max-w-7xl lg:px-0 md:px-2 px-4">
       <div className="flex items-center justify-between">
-        <h1 className="lg:text-4xl text-2xl font-medium">Explore Breed</h1>
-        <span className="lg:pr-10 hover:underline cursor-pointer">See all</span>
+        <h1 className="lg:text-4xl text-xl font-medium">Explore Breed</h1>
+        {/* <span className="hover:underline cursor-pointer">See all</span> */}
       </div>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-6">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 items-start gap-6">
         {loading
           ? Array.from({ length: skeletonCount }).map((_, index) => (
               <SkeletonPuppyCard key={index} />

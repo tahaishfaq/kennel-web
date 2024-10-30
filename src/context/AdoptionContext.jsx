@@ -13,9 +13,11 @@ export const AdoptionProvider = ({ children }) => {
   const [identityVerification, setIdentityVerification] = useState("");
   const [businessProfile, setBusinessProfile] = useState(null);
   const [step, setStep] = useState(1);
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState(""); // New state for payment option
-  const [clientSecret, setClientSecret] = useState(null); // To manage payment client secret
-  const [isLoading, setIsLoading] = useState(false); // To track loading state
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [clientSecret, setClientSecret] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [refreshTicket, setRefreshTicket] = useState(false)
+  const [totalAmountCharged, setTotalAmountCharged] = useState(0)
 
   // Step management
   const nextStep = () => setStep((prevStep) => prevStep + 1);
@@ -134,7 +136,10 @@ export const AdoptionProvider = ({ children }) => {
         setSelectedPaymentOption,
         clientSecret,
         isLoading,
-        
+        refreshTicket, 
+        setRefreshTicket,
+        totalAmountCharged, 
+        setTotalAmountCharged
       }}
     >
       {children}

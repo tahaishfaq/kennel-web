@@ -14,6 +14,9 @@ import medal from "../assets/medal 1.png";
 import vector from "../assets/Vector.png";
 import vector1 from "../assets/Vector (1).png";
 import TalkToBreederPopover from "./TalkToBreederPopover";
+import moment from "moment";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const PuppyDetail = ({ puppyDetail }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -22,9 +25,101 @@ const PuppyDetail = ({ puppyDetail }) => {
     setIsPopoverOpen(!isPopoverOpen);
   };
 
+  if (!puppyDetail) {
+    return (
+      <div className="lg:p-6 p-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array(3)
+            .fill(0)
+            .map((_, index) => (
+              <Skeleton key={index} className="rounded-md w-full h-60" />
+            ))}
+        </div>
+
+        <div className="mt-6 bg-white p-4 lg:p-6 rounded-lg">
+          <div className="flex flex-col lg:flex-row lg:justify-between">
+            <div className="lg:w-[70%]">
+              <div className="flex justify-between items-center">
+                <div>
+                  <Skeleton height={40} width={200} />
+                  <Skeleton height={20} width={150} />
+                </div>
+                <div className="text-right mt-4 lg:mt-0">
+                  <Skeleton height={40} width={100} />
+                  <Skeleton height={20} width={150} />
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <div className="flex items-center bg-[#E8E7E5] rounded-lg p-4 mb-5">
+                  <Skeleton circle width={40} height={40} className="mr-4" />
+                  <div>
+                    <Skeleton height={20} width={100} />
+                    <Skeleton height={20} width={150} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-[#0000001F] border rounded-md p-4 lg:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
+                  {Array(3)
+                    .fill(0)
+                    .map((_, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6"
+                      >
+                        {Array(3)
+                          .fill(0)
+                          .map((_, idx) => (
+                            <Skeleton key={idx} height={20} width={150} />
+                          ))}
+                      </div>
+                    ))}
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 bg-[#0000000A] p-2 lg:p-4 rounded-md">
+                  {Array(2)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton key={index} height={40} width={200} />
+                    ))}
+                </div>
+
+                <div className="mt-4 flex flex-col lg:flex-row gap-4 lg:gap-8">
+                  {Array(2)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton key={index} height={40} width={100} />
+                    ))}
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-col lg:flex-row gap-4 lg:gap-8 bg-[#0000000A] p-2 lg:p-4 rounded-md">
+                <Skeleton height={60} width={250} />
+                <div className="flex justify-around w-full lg:w-1/2">
+                  {Array(3)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton key={index} height={40} width={80} />
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
+              <Skeleton height={50} width="100%" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="lg:p-6 p-3">
-      {/* Puppy Images Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {puppyDetail?.images?.slice(0, 3)?.map((imageData, index) => (
           <img
@@ -36,10 +131,8 @@ const PuppyDetail = ({ puppyDetail }) => {
         ))}
       </div>
 
-      {/* Puppy Information Section */}
       <div className="mt-6 bg-white p-4 lg:p-6 rounded-lg">
         <div className="flex flex-col lg:flex-row lg:justify-between">
-          {/* Left Side - Puppy Name and Info */}
           <div className="lg:w-[70%]">
             <div className="flex justify-between items-center">
               <div>
@@ -47,7 +140,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                   {puppyDetail?.puppy_name}
                 </h1>
                 <h2 className="text-[#000000CC] font-normal text-base lg:text-lg">
-                  Information
+                  {puppyDetail?.size}
                 </h2>
               </div>
               <div className="text-right mt-4 lg:mt-0">
@@ -60,7 +153,6 @@ const PuppyDetail = ({ puppyDetail }) => {
               </div>
             </div>
 
-            {/* Location Section */}
             <div className="mt-6">
               <div className="flex items-center bg-[#E8E7E5] rounded-lg p-4 mb-5">
                 <FaLocationArrow className="text-2xl lg:text-4xl bg-black text-white mr-4 border p-2 border-black rounded-lg" />
@@ -69,14 +161,12 @@ const PuppyDetail = ({ puppyDetail }) => {
                     Location
                   </p>
                   <p className="text-[#000000CC] font-medium text-sm">
-                    Akshay Nagar 1st Block 1st Cross, Rammurthy Nagar,
-                    Bangalore, 560016
+                    {puppyDetail?.location ? puppyDetail?.location : "--"}
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Puppy Details Grid */}
             <div className="border-[#0000001F] border rounded-md p-4 lg:p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
                 <div className="flex flex-col space-y-2 border-dotted border-r border-[#000000A3] pr-4 lg:pr-6">
@@ -86,7 +176,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                       Age:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      May 14, 2023
+                      {moment(puppyDetail?.creation).format("ll")}
                     </span>
                   </p>
                   <p className="flex items-center">
@@ -114,10 +204,10 @@ const PuppyDetail = ({ puppyDetail }) => {
                   <p className="flex items-center">
                     <TbHomeShare className="text-xl lg:text-2xl text-[#000000] mr-2" />
                     <span className="font-normal text-sm text-[#000000CC]">
-                      Bring Home on:
+                      Bring Home:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      July 9, 2024
+                      {moment(puppyDetail?.go_home_date).format("ll")}
                     </span>
                   </p>
                   <p className="flex items-center">
@@ -147,7 +237,9 @@ const PuppyDetail = ({ puppyDetail }) => {
                       Breed:
                     </span>
                     <span className="ml-2 text-[#000000CC] font-semibold text-sm">
-                      Golden
+                      {puppyDetail?.litter_breed_name
+                        ? puppyDetail?.litter_breed_name
+                        : "--"}
                     </span>
                   </p>
                   <p className="flex items-center">
@@ -171,8 +263,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                 </div>
               </div>
 
-              {/* About Puppy Section */}
-              <div className="mt-6">
+              {/* <div className="mt-6">
                 <h2 className="text-[#000000CC] font-medium text-lg lg:text-xl">
                   About Puppy
                 </h2>
@@ -191,7 +282,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                   will love and spoil me, as long as you let me spoil you with
                   my love too. I think you could be the one for me!
                 </p>
-              </div>
+              </div> */}
 
               {/* Guarantee Section */}
               <div className="mt-6">
@@ -213,15 +304,30 @@ const PuppyDetail = ({ puppyDetail }) => {
                 {/* Logos Section */}
                 <div className="mt-4 flex flex-col lg:flex-row gap-4 lg:gap-8">
                   <div className="flex justify-between gap-4">
+                    {puppyDetail?.embark_file == null ||
+                    puppyDetail?.embark_registration == null ||
+                    puppyDetail?.embark_url == "" ? (
+                      ""
+                    ) : (
+                      <div className="border rounded-lg p-2">
+                        <img
+                          src={embarck}
+                          alt="Embark"
+                          className="h-8 lg:h-10"
+                        />
+                      </div>
+                    )}
                     <div className="border rounded-lg p-2">
-                      <img src={embarck} alt="Embark" className="h-8 lg:h-10" />
-                    </div>
-                    <div className="border rounded-lg p-2">
-                      <img
-                        src={genetics}
-                        alt="genetics"
-                        className="h-8 lg:h-10"
-                      />
+                      {puppyDetail?.genetically_clear == null ||
+                      puppyDetail?.genetic_testation == null ? (
+                        ""
+                      ) : (
+                        <img
+                          src={genetics}
+                          alt="genetics"
+                          className="h-8 lg:h-10"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -284,19 +390,26 @@ const PuppyDetail = ({ puppyDetail }) => {
           </div>
 
           {/* Right Side - Actions */}
-          <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-0 flex flex-col gap-4">
-            <div className="bg-[#E8E7E5] py-4 px-4 border rounded-md">
+          <div className="lg:w-[28%] lg:ml-8 mt-6 lg:mt-1 flex flex-col gap-4">
+            <div className="">
               <button
-                className="w-full flex items-center font-medium text-base lg:text-lg justify-center bg-black text-white px-4 py-2 rounded-md mb-4"
+                className="w-full flex items-end font-medium justify-center bg-black text-white px-4 py-2.5 rounded-md"
                 onClick={handleButtonClick}
               >
-                <MdOutlineMessage className="mr-2" /> Talk to Breeder
+                <MdOutlineMessage className="mr-2 w-5 h-5" />{" "}
+                <span>Talk to Breeder</span>
               </button>
-              {isPopoverOpen && <TalkToBreederPopover puppyDetail={puppyDetail}/>}
+              {isPopoverOpen && (
+                <TalkToBreederPopover
+                  puppyDetail={puppyDetail}
+                  isOpen={isPopoverOpen}
+                  setIsOpen={setIsPopoverOpen}
+                />
+              )}
 
-              <button className="w-full flex items-center text-[#000000] font-medium text-base lg:text-lg justify-center border border-black px-4 py-2 rounded-md">
+              {/* <button className="w-full flex items-center text-[#000000] font-medium text-base lg:text-lg justify-center border border-black px-4 py-2 rounded-md">
                 Take me home
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

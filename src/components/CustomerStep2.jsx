@@ -9,7 +9,7 @@ const stripePromise = loadStripe("pk_test_MUCRGDLls3HZurHWRkECm1RE");
 
 const CustomerStep2 = ({ ticketId, puppyDetails }) => {
   const [clientSecret, setClientSecret] = useState("");
-  const { selectedPaymentOption, nextStep } = useAdoption();
+  const { selectedPaymentOption, nextStep, totalAmountCharged } = useAdoption();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const CustomerStep2 = ({ ticketId, puppyDetails }) => {
   };
 
   return (
-    <div>
+    <div className="mx-auto max-w-7xl p-4">
       {loading && <p>Loading payment options...</p>}
       {clientSecret && (
         <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>

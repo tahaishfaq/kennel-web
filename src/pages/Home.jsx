@@ -13,30 +13,34 @@ import { FilterProvider } from "../context/FilterContext";
 const Home = () => {
   return (
     <FilterProvider>
-    <div className="font-poppins ">
-      <Header />
-      <div className="flex flex-col gap-y-16 lg:items-start items-center py-10 lg:px-0 px-2 max-w-7xl mx-auto">
-        <div className="w-full">
-          <FilterBar />
-        </div>
+      <div className="font-satoshi">
+        <Header />
+        <FilterBar />
         <Puppy />
-
-        <div className="w-full">
         <Banner />
-        </div>
-
-        <div>
-          <ExploreBreed />
-        </div>
-        <div className="flex flex-col items-start gap-y-10 pt-16 font-light">
-          <CityFilter />
-          <StateFilter />
-        </div>
-      </div>
-      <div className="pt-20">
+        <ExploreBreed />
         <Footer />
+        {/* <div className="flex flex-col gap-y-16 lg:items-start items-center py-10 lg:px-0 px-2 max-w-7xl mx-auto">
+          <div className="w-full">
+          </div>
+          
+
+          <div className="w-full">
+            
+          </div>
+
+          <div>
+            
+          </div>
+          <div className="flex flex-col items-start gap-y-10 pt-16 font-light">
+            <CityFilter />
+            <StateFilter />
+          </div>
+        </div>
+        <div className="pt-20">
+          
+        </div> */}
       </div>
-    </div>
     </FilterProvider>
   );
 };

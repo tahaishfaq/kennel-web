@@ -27,12 +27,20 @@ const validationSchema = Yup.object({
   shipping_state: Yup.string().required("Shipping State is required"),
 });
 
-const CustomerStep1 = ({ onContinue }) => {
-  const { submitCustomerDetails, ticketId, businessProfile, customerDetails, identityVerification, nextStep } = useAdoption();
+const CustomerStep1 = ({ adoptionTicket }) => {
+  const {
+    submitCustomerDetails,
+    ticketId,
+    businessProfile,
+    customerDetails,
+    identityVerification,
+    nextStep,
+    setRefreshTicket,
+    refreshTicket,
+  } = useAdoption();
 
   const [loader, setLoader] = useState(false);
   const stripe = useStripe();
-
 
   // Initialize formik for customer details
   const formik = useFormik({
@@ -51,7 +59,7 @@ const CustomerStep1 = ({ onContinue }) => {
     onSubmit: async (values) => {
       const response = await submitCustomerDetails(values);
       console.log(response);
-  
+
       if (response.success) {
         nextStep();
       } else {
@@ -59,9 +67,6 @@ const CustomerStep1 = ({ onContinue }) => {
       }
     },
   });
-  
-
-
 
   // Handle Stripe Verification
   const handleVerifyBusinessProfile = async () => {
@@ -92,15 +97,18 @@ const CustomerStep1 = ({ onContinue }) => {
       }, 2000);
 
       // Show the verification modal.
-      const { error } = await stripe.verifyIdentity(session.data.session.client_secret);
+      const { error } = await stripe.verifyIdentity(
+        session.data.session.client_secret
+      );
 
       if (error) {
         console.error("[Verification Error]", error);
       } else {
         console.log("Verification Completed!");
         setTimeout(() => {
-          onContinue(); // Continue to the next step once verification is completed
-        }, 1000);
+          // onContinue();
+          setRefreshTicket(!refreshTicket);
+        }, 500);
       }
     } catch (error) {
       console.error("Error creating VerificationSession:", error);
@@ -109,7 +117,8 @@ const CustomerStep1 = ({ onContinue }) => {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <form onSubmit={formik.handleSubmit}
+      <form
+        onSubmit={formik.handleSubmit}
         className="flex lg:flex-row flex-col items-start gap-x-6 gap-y-4"
       >
         <div className="lg:w-2/3 w-full border border-[#0000001F] px-5 py-6 rounded-md ">
@@ -150,7 +159,9 @@ const CustomerStep1 = ({ onContinue }) => {
                 onChange={formik.handleChange}
               />
               {formik.touched.phone && formik.errors.phone && (
-                <div className="text-red-500 text-sm">{formik.errors.phone}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.phone}
+                </div>
               )}
             </div>
 
@@ -168,7 +179,9 @@ const CustomerStep1 = ({ onContinue }) => {
                 onChange={formik.handleChange}
               />
               {formik.touched.email && formik.errors.email && (
-                <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
               )}
             </div>
           </div>
@@ -186,11 +199,12 @@ const CustomerStep1 = ({ onContinue }) => {
               value={formik.values.billing_address}
               onChange={formik.handleChange}
             />
-            {formik.touched.billing_address && formik.errors.billing_address && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.billing_address}
-              </div>
-            )}
+            {formik.touched.billing_address &&
+              formik.errors.billing_address && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.billing_address}
+                </div>
+              )}
           </div>
 
           {/* Billing ZIP and State */}
@@ -290,24 +304,26 @@ const CustomerStep1 = ({ onContinue }) => {
                 value={formik.values.shipping_state}
                 onChange={formik.handleChange}
               />
-              {formik.touched.shipping_state && formik.errors.shipping_state && (
-                <div className="text-red-500 text-sm">
-                  {formik.errors.shipping_state}
-                </div>
-              )}
+              {formik.touched.shipping_state &&
+                formik.errors.shipping_state && (
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.shipping_state}
+                  </div>
+                )}
             </div>
           </div>
-
         </div>
 
         <div className="lg:w-1/3 w-full">
-          <PaymentDetails />
-          {identityVerification == "verified" ? <button
-            type="submit"
-            className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-normal"
-          >
-            Continue
-          </button> :
+          <PaymentDetails adoptionTicket={adoptionTicket} />
+          {identityVerification == "verified" ? (
+            <button
+              type="submit"
+              className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-normal"
+            >
+              Continue
+            </button>
+          ) : (
             <button
               type="button"
               onClick={handleVerifyBusinessProfile}
@@ -315,11 +331,10 @@ const CustomerStep1 = ({ onContinue }) => {
             >
               Stripe Verification
             </button>
-          }
+          )}
         </div>
-
       </form>
-    </div >
+    </div>
   );
 };
 

@@ -31,22 +31,22 @@ const PuppyDetailPage = () => {
 
   return (
     <>
-      <div className="font-poppins max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-y-16">
+      <div className="font-satoshi bg-white">
           <NavBar />
+        <div className="mx-auto max-w-7xl pt-16 sm:pt-20">
+          <PuppyDetail puppyDetail={puppyDetail} />
 
           <div className="">
-            <PuppyDetail puppyDetail={puppyDetail} />
             {/* <Siblings /> */}
             {/* <Parents /> */}
           </div>
 
-          <div>
+          {/* <div>
             <CityFilter />
           </div>
           <div>
             <StateFilter />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="pt-20">

@@ -20,7 +20,7 @@ const CheckoutForm = () => {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:5173/payment-success", // Correct return URL
+        return_url: "https://kennelboss-796ba.web.app/payment-success", // Correct return URL
       },
     });
 
@@ -37,7 +37,7 @@ const CheckoutForm = () => {
     }
   };
   return (
-    <div className="mx-auto max-w-7xl p-4 ">
+    <div className="mx-auto max-w-7xl p-4">
       <div className="text-[24px] font-normal mb-4">CheckoutForm</div>
       <PaymentElement />
       <button className="px-8 bg-blue-600 text-white py-3 rounded-lg font-normal mt-10" onClick={handlePaymentDone} >

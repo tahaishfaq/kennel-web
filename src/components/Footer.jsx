@@ -30,7 +30,7 @@ const Footer = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="px-4 bg-[#A1ADAB] lg:py-12 md:py-12 pt-5 pb-10">
+    <div className="px-4 bg-[#A1ADAB] lg:py-12 md:py-12 pt-5 pb-10 lg:mt-10">
       <div className="flex flex-col lg:px-16  gap-y-8 mx-auto max-w-[1440px]">
         <div className="flex flex-col lg:flex-row lg:px-6 bg-[#A1ADAB] py-12 ">
           <div className="w-full">
@@ -91,7 +91,7 @@ const Footer = () => {
         <div className="w-full px-6 flex flex-col md:flex-row justify-between items-center gap-y-6 md:gap-y-3">
           <div className="text-[#000000CC]">
             <div className="font-medium text-sm flex flex-col md:flex-row gap-y-2 md:gap-y-0 gap-x-6 items-center">
-              <span> &copy; 2022 brand. All rights reserved. </span>
+              <span> &copy; 2024 brand. All rights reserved. </span>
             </div>
           </div>
 

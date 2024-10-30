@@ -28,7 +28,7 @@ export const FilterProvider = ({ children }) => {
       filters.push(["gender", "=", selectedGender]);
     }
     if (selectedBreed) {
-      filters.push(["breed", "=", selectedBreed]);
+      filters.push(["litter_breed_name", "=", selectedBreed]);
     }
     if (color) {
       filters.push(["coat_color", "=", color]);
@@ -48,6 +48,7 @@ export const FilterProvider = ({ children }) => {
         ? publishFilter.concat(filters) 
         : query; 
 
+        console.log(combinedFilters)
     // Generate query
     const filterQuery = `${encodeURIComponent(
       JSON.stringify(combinedFilters)

@@ -11,10 +11,7 @@ const PuppyCard = ({ data }) => {
   };
 
   return (
-    <div
-      className="bg-white p-2 border border-gray-200 rounded-md lg:max-w-[397px] w-full cursor-pointer hover:shadow-lg transition-shadow duration-200"
-      onClick={handleCardClick}
-    >
+    <div className="border border-[#0000000D] p-2.5 rounded-[12px] cursor-pointer puppy-card-shadow transition-shadow duration-200">
       <div>
         <img
           src={
@@ -22,8 +19,9 @@ const PuppyCard = ({ data }) => {
               ? window.$BackEndURL + data?.profile_picture
               : "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           }
+          onClick={handleCardClick}
           alt="puppy"
-          className="rounded-md h-[283px] w-full object-cover object-center"
+          className="rounded-[10px] h-[283px] w-full object-cover object-center"
         />
       </div>
       <div className="flex flex-col gap-y-1.5 py-2 px-2">
@@ -32,12 +30,15 @@ const PuppyCard = ({ data }) => {
             {data?.puppy_name + " | "}
             {data?.gender === "Male" ? "Boy" : "Girl"}
           </h2>
+          <div className="flex flex-col items-end">
           <p className="font-medium">{"$" + data?.price}</p>
+          <span className="text-xs underline">Financing options available</span>
+          </div>
         </div>
         <div>
           <span className="text-[#000000A3] text-sm">
             {data?.size + " - "}
-            {data?.litter_breed != null ? data?.litter_breed : "Goldendoodle"}
+            {data?.litter_breed_name}
           </span>
         </div>
         <div className="flex items-center justify-between">
@@ -56,10 +57,10 @@ const PuppyCard = ({ data }) => {
             <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
               {data?.coat_color ? data?.coat_color : "-"}
             </span>
-            <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
+            <span className="bg-black text-white px-3 py-1 text-xs rounded-md">
               Learn More
             </span>
-            <span className="bg-gray-100 px-3 py-1 text-xs rounded-full">
+            <span className="bg-black text-white px-3 py-1 text-xs rounded-md">
               Video Chat
             </span>
           </div>

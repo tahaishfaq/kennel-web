@@ -6,7 +6,7 @@ import klarnalogo from '../assets/klarna.png';
 import { useAdoption } from '../context/AdoptionContext';
 import PaymentDetails from "./PaymentDetails";
 
-const PaymentOptions = () => {
+const PaymentOptions = ({adoptionTicket}) => {
   const { selectedPaymentOption, setSelectedPaymentOption, nextStep } = useAdoption(); // Use adoption context
 
   // Handle payment option change
@@ -85,7 +85,7 @@ const PaymentOptions = () => {
       </div>
 
       <div className="w-full lg:w-1/3">
-       <PaymentDetails />
+       <PaymentDetails adoptionTicket={adoptionTicket}/>
         <button onClick={nextStep} className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-semibold">
           Continue to billing
         </button>
