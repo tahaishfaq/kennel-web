@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAdoption } from "../context/AdoptionContext";
-import { PaymentElement, useStripe, useElements, Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-import CheckoutForm from "./CheckoutForm";
-
-const stripePromise = loadStripe("pk_test_MUCRGDLls3HZurHWRkECm1RE");
 
 const CustomerStep2 = ({ ticketId, puppyDetails }) => {
-  const [clientSecret, setClientSecret] = useState("");
-  const { selectedPaymentOption, nextStep, totalAmountCharged } = useAdoption();
+  const { selectedPaymentOption, totalAmountCharged } = useAdoption();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handlePayment = async () => {
       setLoading(true);
+
       const json = {
         adoption_ticket: ticketId,
         amount:
@@ -24,14 +19,20 @@ const CustomerStep2 = ({ ticketId, puppyDetails }) => {
       };
 
       try {
+        console.log("json", json);
         const res = await axios.post(
-          "https://primary.kennelboss.app/api/method/kennelboss.stpayments.create_payment_intent",
+          "https://primary.kennelboss.app/api/method/kennelboss.stpayments.create_checkout_session",
           json
         );
-        console.log("Stripe payment intent response", res);
-        setClientSecret(res?.data?.message?.client_secret);
+        console.log(res)
+        const checkoutUrl = res?.data?.message;
+
+        if (checkoutUrl) {
+          // Redirect the user to the Stripe Checkout page
+          window.location.href = checkoutUrl;
+        }
       } catch (error) {
-        console.error("Error creating payment intent", error);
+        console.error("Error creating checkout session", error);
       } finally {
         setLoading(false);
       }
@@ -40,19 +41,12 @@ const CustomerStep2 = ({ ticketId, puppyDetails }) => {
     handlePayment();
   }, [ticketId, puppyDetails, selectedPaymentOption]);
 
-  
-
-  const appearance = {
-    theme: "stripe",
-  };
-
   return (
     <div className="mx-auto max-w-7xl p-4">
-      {loading && <p>Loading payment options...</p>}
-      {clientSecret && (
-        <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-          <CheckoutForm/>
-        </Elements>
+      {loading ? (
+        <p>Loading payment options...</p>
+      ) : (
+        <p>Redirecting to checkout...</p>
       )}
     </div>
   );

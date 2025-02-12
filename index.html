@@ -1,13 +1,147 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kennel Boss</title>
+    <title>Pick Me Pets</title>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-P23R4SD8");
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-P23R4SD8"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <script type="module" src="/src/main.jsx"></script>
+    <!-- <script type="text/javascript">
+      var _support = _support || { ui: {}, user: {} };
+      _support.outbounds = _support.outbounds || [];
+      _support.outbounds.push({
+        id: "134893",
+        name: "Looking for",
+        message: "Vet Checked Pets Delivered to your Door Step!",
+        sound: true,
+        transient: false,
+        duration: 0,
+        botsEnabled: false,
+        enableCustomFields: false,
+        disableCueClick: false,
+        user: {
+          type: "team",
+        },
+      });
+    </script>
+    <script
+      type="text/javascript"
+      async
+      src="https://cdn.reamaze.com/assets/reamaze-loader.js"
+    ></script>
+    <script type="text/javascript">
+      var _support = _support || { ui: {}, user: {} };
+      _support["account"] = "pickmepets";
+      _support["ui"]["contactMode"] = "default";
+      _support["ui"]["enableKb"] = "true";
+      _support["ui"]["styles"] = {
+        widgetColor: "rgba(16, 162, 197, 1)",
+        gradient: true,
+      };
+      _support["ui"]["shoutboxFacesMode"] = "default";
+      _support["ui"]["widget"] = {
+        icon: "webChat",
+        displayOn: "all",
+        fontSize: "default",
+        allowBotProcessing: true,
+        slug: "pick-me-pets-chat-slash-contact-form-shoutbox",
+        label: {
+          text: "Let us know if you have any questions! &#128522;",
+          mode: "notification",
+          delay: 3,
+          duration: 30,
+          primary: "I have a question",
+          secondary: "No, thanks",
+          sound: true,
+        },
+        position: "bottom-right",
+        mobilePosition: "bottom-right",
+      };
+      _support["custom_fields"] = {
+        "Phone Number": {
+          pos: 1734067393915,
+          type: "phone",
+          value: "",
+          required: true,
+          placeholder: "",
+          connectContact: false,
+        },
+        "When are you looking to Adopt?": {
+          pos: 1734067460651,
+          type: "dropdown",
+          value: ["Now", "Next Month", "3-4 Months"],
+          required: true,
+          placeholder: "",
+          defaultValue: "undefined",
+        },
+      };
+      _support["apps"] = {
+        faq: { enabled: true },
+        recentConversations: {},
+        orders: {},
+        shopper: {},
+      };
+    </script> -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      fbq("init", "616837100708677");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=616837100708677&ev=PageView&noscript=1"
+    /></noscript>
   </body>
 </html>

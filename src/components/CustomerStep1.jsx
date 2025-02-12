@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
   shipping_state: Yup.string().required("Shipping State is required"),
 });
 
-const CustomerStep1 = ({ adoptionTicket }) => {
+const CustomerStep1 = ({ adoptionTicket, customer }) => {
   const {
     submitCustomerDetails,
     ticketId,
@@ -45,9 +45,9 @@ const CustomerStep1 = ({ adoptionTicket }) => {
   // Initialize formik for customer details
   const formik = useFormik({
     initialValues: {
-      full_name: "",
-      phone: "",
-      email: "",
+      full_name: customer.full_name,
+      phone: customer.phone,
+      email: customer.email,
       billing_address: "",
       billing_zip_code: "",
       billing_state: "",
@@ -117,15 +117,15 @@ const CustomerStep1 = ({ adoptionTicket }) => {
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
-      <form
-        onSubmit={formik.handleSubmit}
+      <div
+        // onSubmit={formik.handleSubmit}
         className="flex lg:flex-row flex-col items-start gap-x-6 gap-y-4"
       >
-        <div className="lg:w-2/3 w-full border border-[#0000001F] px-5 py-6 rounded-md ">
+        {/* <div className="lg:w-2/3 w-full border border-[#0000001F] px-5 py-6 rounded-md ">
           <h2 className="text-[28px] font-normal mb-4">Customer Info</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Full Name */}
+            
             <div>
               <label className="block text-base font-medium text-[#212B36]">
                 Full name
@@ -145,7 +145,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
               )}
             </div>
 
-            {/* Phone Number */}
+           
             <div>
               <label className="block text-base font-medium text-[#212B36]">
                 Phone Number
@@ -165,7 +165,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
               )}
             </div>
 
-            {/* Email */}
+            
             <div>
               <label className="block text-base font-medium text-[#212B36]">
                 Email Address
@@ -186,7 +186,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
             </div>
           </div>
 
-          {/* Billing Address */}
+          
           <div className="mt-7">
             <label className="block text-base font-medium text-[#212B36]">
               Billing Address
@@ -207,7 +207,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
               )}
           </div>
 
-          {/* Billing ZIP and State */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
             <div>
               <label className="block text-base font-medium text-[#212B36]">
@@ -249,7 +249,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
             </div>
           </div>
 
-          {/* Shipping Address */}
+         
           <div className="mt-7">
             <label className="block text-base font-medium text-[#212B36]">
               Shipping Address
@@ -270,7 +270,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
               )}
           </div>
 
-          {/* Shipping ZIP and State */}
+         
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-7">
             <div>
               <label className="block text-base font-medium text-[#212B36]">
@@ -312,13 +312,13 @@ const CustomerStep1 = ({ adoptionTicket }) => {
                 )}
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="lg:w-1/3 w-full">
           <PaymentDetails adoptionTicket={adoptionTicket} />
           {identityVerification == "verified" ? (
             <button
-              type="submit"
+              onClick={()=>nextStep()}
               className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg font-normal"
             >
               Continue
@@ -333,7 +333,7 @@ const CustomerStep1 = ({ adoptionTicket }) => {
             </button>
           )}
         </div>
-      </form>
+      </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ export default {
         roboto: ["Roboto", "sans-serif"],
         robotoSlab: ["Roboto Slab", "sans-serif"],
         satoshi: ["Satoshi", "sans-serif"],
+        abel: ["Abel", "sans-serif"],
       },
     },
   },
