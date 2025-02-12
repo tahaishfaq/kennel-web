@@ -5,6 +5,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CiFilter } from "react-icons/ci";
 import { useFilter } from "../context/FilterContext";
 import axios from "axios";
+import { IoIosArrowDown } from "react-icons/io";
+import { FiSearch } from "react-icons/fi";
 
 const FilterBar = () => {
   const {
@@ -21,6 +23,8 @@ const FilterBar = () => {
     applyFilters,
     clearFilters,
     setQuery,
+    searchQuery,
+    setSearchQuery,
   } = useFilter();
 
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
@@ -73,25 +77,40 @@ const FilterBar = () => {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl lg:py-6 md:py-5 py-4 lg:px-0 md:px-2 px-4">
-        <div className="hidden md:flex items-center justify-between border border-[#0000000D] py-4 px-4 bg-white shadow-sm rounded-lg">
-          <div className="flex items-center gap-x-2 lg:max-w-5xl md:max-w-3xl  w-full">
-            <div className="relative w-full">
+      <div className="mx-auto max-w-7xl lg:py-6 md:py-4 py-4 sm:px-0 md:px-4 px-4">
+        <div className="hidden md:flex items-center justify-between py-4 px-4 bg-white filter-bar-shadow rounded-lg">
+          <div className="flex items-center gap-x-3 lg:max-w-5xl md:max-w-3xl  w-full">
+            <div className="relative flex items-center w-full">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-3 py-3 rounded-[12px] text-[#000000A3] font-normal text-[14px]  placeholder:text-[#000000A3] focus:outline-none outline-none bg-[#0000000A]"
+                placeholder="Search"
+              />
+              <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <FiSearch className="w-5 h-5 text-[#000000]" />
+              </span>
+            </div>
+            <div className="relative">
               <select
                 value={selectedGender}
                 onChange={(e) => setSelectedGender(e.target.value)}
-                className="form-select block w-full p-3 rounded-[12px] text-gray-500 focus:outline-none ring-0 bg-[#0000000A]"
+                className="form-select block w-36 p-3  rounded-[12px] appearance-none font-normal text-[14px]  text-[#000000A3] focus:outline-none ring-0 bg-[#0000000A]"
               >
                 <option value="">Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+              <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <IoIosArrowDown className="w-4 h-4 text-[#000000]" />
+              </span>
             </div>
-            <div className="relative w-full">
+            <div className="relative ">
               <select
                 value={selectedBreed}
                 onChange={(e) => setSelectedBreed(e.target.value)}
-                className="form-select block w-full p-3 rounded-[12px] text-gray-500 focus:outline-none ring-0 bg-[#0000000A]"
+                className="form-select block w-40 p-3 pr-10 truncate  rounded-[12px] appearance-none  text-[#000000A3] font-normal text-[14px]  focus:outline-none ring-0 bg-[#0000000A]"
               >
                 <option value="">Select Breed</option>
                 {breed?.map((item) => (
@@ -100,12 +119,15 @@ const FilterBar = () => {
                   </option>
                 ))}
               </select>
+              <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <IoIosArrowDown className="w-4 h-4 text-[#000000]" />
+              </span>
             </div>
-            <div className="relative w-full">
+            <div className="relative">
               <select
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-                className="form-select block w-full p-3 rounded-[12px] text-gray-500 focus:outline-none ring-0 bg-[#0000000A]"
+                className="form-select block w-48 p-3  rounded-[12px] appearance-none  text-[#000000A3] font-normal text-[14px]  focus:outline-none ring-0 bg-[#0000000A]"
               >
                 <option value="">Choose Color</option>
                 {colors.map((colorOption) => (
@@ -114,12 +136,15 @@ const FilterBar = () => {
                   </option>
                 ))}
               </select>
+              <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <IoIosArrowDown className="w-4 h-4 text-[#000000]" />
+              </span>
             </div>
-            <div className="relative w-full">
+            <div className="relative">
               <select
                 value={selectedSize}
                 onChange={(e) => setSelectedSize(e.target.value)}
-                className="form-select block w-full p-3 rounded-[12px] text-gray-500 focus:outline-none ring-0 bg-[#0000000A]"
+                className="form-select block w-36 p-3  rounded-[12px] appearance-none  text-[#000000A3] font-normal text-[14px]  focus:outline-none ring-0 bg-[#0000000A]"
               >
                 <option value="">Select Size</option>
                 <option value="Micro">Micro</option>
@@ -132,8 +157,11 @@ const FilterBar = () => {
                 <option value="Large">Large</option>
                 <option value="Extra Large">Extra Large</option>
               </select>
+              <span className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                <IoIosArrowDown className="w-4 h-4 text-[#000000]" />
+              </span>
             </div>
-            <div className="relative w-full">
+            {/* <div className="relative w-full">
               <input
                 value={goHomeDate}
                 onChange={(e) => setGoHomeDate(e.target.value)}
@@ -141,19 +169,21 @@ const FilterBar = () => {
                 type="date"
                 className="form-input block w-full p-3 rounded-[12px] text-gray-400 focus:outline-none ring-0 bg-[#0000000A]"
               />
-            </div>
+            </div> */}
           </div>
           <div className="pl-3 flex flex-1 gap-x-2 items-center">
             <button
               onClick={applyFilters}
-              className="bg-black text-white w-full py-3 rounded-lg"
+              className="bg-black text-white w-full py-3 rounded-[8px]"
             >
               Apply
             </button>
             <button
               onClick={() => {
                 clearFilters();
-                setQuery(`[["publishing_status", "=", "Approved"]]`);
+                setQuery(
+                  `[["publishing_status", "=", "Approved"] , ["sync_to_website", "=", "1"]]`
+                );
               }}
               type="button"
               className="bg-black text-white w-full py-3 rounded-lg"
@@ -168,6 +198,8 @@ const FilterBar = () => {
           <div className="relative flex items-center w-full">
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-3 py-3 rounded-[12px] focus:outline-none outline-none bg-[#0000000A]"
               placeholder="Search"
             />
@@ -192,8 +224,8 @@ const FilterBar = () => {
             <div className="mt-4">
               <div className="relative w-full mb-4">
                 <select
-                  value={selectedGender}
-                  onChange={(e) => setSelectedGender(e.target.value)}
+                  value={selectedSize}
+                  onChange={(e) => setSelectedSize(e.target.value)}
                   className="form-select block w-full p-3 rounded-[12px] focus:outline-none focus:ring focus:border-blue-300 bg-[#0000000A]"
                 >
                   <option value="">Select Size</option>
@@ -260,7 +292,9 @@ const FilterBar = () => {
               <button
                 onClick={() => {
                   clearFilters();
-                  setQuery("");
+                  setQuery(
+                    `[["publishing_status", "=", "Approved"] , ["sync_to_website", "=", "1"]]`
+                  );
                 }}
                 className="bg-gray-200 text-black px-4 py-2 rounded-lg"
               >

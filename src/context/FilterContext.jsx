@@ -17,10 +17,14 @@ export const FilterProvider = ({ children }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [goHomeDate, setGoHomeDate] = useState("");
   const [puppies, setPuppies] = useState([]);
+  const [filteredPuppies, setFilteredPuppies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState(`[["publishing_status", "=", "Approved"]]`);
-  // Function to apply filters and fetch data
+  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState(
+    `[["publishing_status", "=", "Approved"] , ["sync_to_website", "=", "1"]]`
+  );
 
+  // Function to apply filters and fetch data
   const applyFilters = () => {
     const filters = [];
 
@@ -40,39 +44,48 @@ export const FilterProvider = ({ children }) => {
       filters.push(["go_home_date", "=", goHomeDate]);
     }
 
-    const publishFilter = [["publishing_status", "=", "Approved"]];
+    const publishFilter = [["publishing_status", "=", "Approved"], ["sync_to_website", "=", "1"]];
 
-    
     const combinedFilters =
       filters.length > 0
-        ? publishFilter.concat(filters) 
-        : query; 
+        ? publishFilter.concat(filters)
+        : query;
 
-        console.log(combinedFilters)
+    console.log(combinedFilters);
     // Generate query
-    const filterQuery = `${encodeURIComponent(
-      JSON.stringify(combinedFilters)
-    )}`;
+    const filterQuery = `${encodeURIComponent(JSON.stringify(combinedFilters))}`;
     setQuery(filterQuery);
+  };
+
+  // Function to filter puppies by puppy_name
+  const filterPuppiesBySearchQuery = (puppies, searchQuery) => {
+    if (!searchQuery.trim()) {
+      setFilteredPuppies(puppies); // If no query, show all puppies
+      return;
+    }
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = puppies.filter((puppy) =>
+      puppy?.puppy_name?.toLowerCase().includes(lowercasedQuery)
+    );
+    setFilteredPuppies(filtered);
   };
 
   // Fetch data initially
   useEffect(() => {
     setLoading(true);
-    try {
-      axios
-        .get(`${window.$BackEndURL}/api/method/get-pups?filters=${query}`)
-        .then((res) => {
-          console.log("Puppies", res?.data?.data);
-          setPuppies(res.data.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-        });
-    } catch (error) {}
-  }, [query]);
+    axios
+      .get(`${window.$BackEndURL}/api/method/get-pups?filters=${query}`)
+      .then((res) => {
+        const fetchedPuppies = res?.data?.data || [];
+        setPuppies(fetchedPuppies);
+        filterPuppiesBySearchQuery(fetchedPuppies, searchQuery);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [query, searchQuery]);
 
   // Function to clear filters
   const clearFilters = () => {
@@ -81,7 +94,6 @@ export const FilterProvider = ({ children }) => {
     setColor("");
     setSelectedSize("");
     setGoHomeDate("");
-    // setQuery("");
     applyFilters();
   };
 
@@ -98,11 +110,13 @@ export const FilterProvider = ({ children }) => {
         setSelectedSize,
         goHomeDate,
         setGoHomeDate,
-        puppies,
+        puppies: filteredPuppies,
         loading,
         applyFilters,
         clearFilters,
         setQuery,
+        searchQuery,
+        setSearchQuery,
       }}
     >
       {children}

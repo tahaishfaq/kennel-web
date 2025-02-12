@@ -11,11 +11,14 @@ import Footer from "../components/Footer";
 import { FilterProvider } from "../context/FilterContext";
 
 const Home = () => {
+  
   return (
     <FilterProvider>
       <div className="font-satoshi">
         <Header />
+        <div className="pt-8">
         <FilterBar />
+        </div>
         <Puppy />
         <Banner />
         <ExploreBreed />

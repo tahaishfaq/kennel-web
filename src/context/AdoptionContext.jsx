@@ -13,7 +13,7 @@ export const AdoptionProvider = ({ children }) => {
   const [identityVerification, setIdentityVerification] = useState("");
   const [businessProfile, setBusinessProfile] = useState(null);
   const [step, setStep] = useState(1);
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
   const [clientSecret, setClientSecret] = useState(null); 
   const [isLoading, setIsLoading] = useState(false); 
   const [refreshTicket, setRefreshTicket] = useState(false)
@@ -107,12 +107,12 @@ export const AdoptionProvider = ({ children }) => {
   // };
 
   // Load customer details from localStorage when component mounts
-  useEffect(() => {
-    const storedCustomerDetails = localStorage.getItem("customerDetails");
-    if (storedCustomerDetails) {
-      setCustomerDetails(JSON.parse(storedCustomerDetails));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCustomerDetails = localStorage.getItem("customerDetails");
+  //   if (storedCustomerDetails) {
+  //     setCustomerDetails(JSON.parse(storedCustomerDetails));
+  //   }
+  // }, []);
 
   return (
     <AdoptionContext.Provider
@@ -120,6 +120,7 @@ export const AdoptionProvider = ({ children }) => {
         puppyDetails,
         setPuppyDetails,
         customerDetails,
+        setCustomerDetails,
         step,
         setStep,
         nextStep,

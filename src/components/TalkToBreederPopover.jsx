@@ -103,7 +103,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
         isOpen ? "" : "hidden"
       } bg-gray-900 bg-opacity-60 z-50`}
     >
-      <div className="bg-white sm:p-6 p-4 rounded-lg shadow-lg w-full max-w-4xl h-full sm:h-auto overflow-y-auto">
+      <div className="bg-white sm:p-6 p-4 sm:mx-0 mx-2 rounded-lg shadow-lg w-full max-w-4xl h-auto sm:h-auto overflow-y-auto">
         <div className="flex justify-between items-start mb-4">
           <h2 className="text-black text-2xl font-medium">
             Talk to {puppyDetail?.business_profile?.business_name}
@@ -117,7 +117,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-8">
-          <div className="bg-gray-100 p-4 rounded-md flex flex-col w-full sm:w-1/3">
+          <div className="bg-gray-100 p-4 rounded-md sm:flex hidden flex-col w-full sm:w-1/3">
             <img
               src={
                 puppyDetail?.profile_picture
@@ -144,154 +144,154 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
 
             <form
               onSubmit={formik.handleSubmit}
-              className="space-y-4 overflow-y-auto max-h-[400px] sm:max-h-[none]"
+              className="sm:space-y-4 space-y-2 sm:max-h-none max-h-[500px] flex flex-col"
             >
-              {/* First Name and Last Name */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col gap-y-1 w-full">
-                  <input
-                    type="text"
-                    name="first_name"
-                    placeholder="First Name"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.first_name}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.first_name && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.first_name}
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-y-1 w-full">
-                  <input
-                    type="text"
-                    name="last_name"
-                    placeholder="Last Name"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.last_name}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.last_name && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.last_name}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Email and Phone Number */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col gap-y-1 w-full">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.email && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.email}
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-y-1 w-full">
-                  <input
-                    type="tel"
-                    name="phone_number"
-                    placeholder="Phone Number"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.phone_number}
-                    onChange={formik.handleChange}
-                  />
-                  {formik.errors.phone_number && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.phone_number}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Country and State */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex flex-col gap-y-1 w-full">
-                  <select
-                    name="country"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.country}
-                    onChange={(e) => {
-                      formik.handleChange(e);
-                      fetchStates(e.target.value);
-                    }}
-                  >
-                    <option disabled value="">
-                      Select Country
-                    </option>
-                    {countries.map((country, index) => (
-                      <option key={index} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.errors.country && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.country}
-                    </div>
-                  )}
-                </div>
-                <div className="flex flex-col gap-y-1 w-full">
-                  <select
-                    name="state"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    disabled={!formik.values.country}
-                  >
-                    <option disabled value="">
-                      Select State
-                    </option>
-                    {states.map((state, index) => (
-                      <option key={index} value={state}>
-                        {state}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.errors.state && (
-                    <div className="text-red-500 text-sm">
-                      {formik.errors.state}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-y-1 w-full">
-                <textarea
-                  name="message"
-                  rows="4"
-                  placeholder="Write your message here"
-                  className="w-full p-3 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
-                  value={formik.values.message}
-                  onChange={formik.handleChange}
-                ></textarea>
-                {formik.errors.message && (
-                  <div className="text-red-500 text-sm">
-                    {formik.errors.message}
+              {/* Scrollable Content */}
+              <div className="overflow-y-auto flex-grow sm:space-y-4 space-y-2">
+                <div className="flex flex-col sm:flex-row sm:gap-4 gap-1.5">
+                  <div className="flex flex-col gap-y-1 w-full">
+                    <input
+                      type="text"
+                      name="first_name"
+                      placeholder="First Name"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.first_name}
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.first_name && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.first_name}
+                      </div>
+                    )}
                   </div>
-                )}
+                  <div className="flex flex-col gap-y-1 w-full">
+                    <input
+                      type="text"
+                      name="last_name"
+                      placeholder="Last Name"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.last_name}
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.last_name && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.last_name}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Email and Phone Number */}
+                <div className="flex flex-col sm:flex-row sm:gap-4 gap-1.5">
+                  <div className="flex flex-col gap-y-1 w-full">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email Address"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.email && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.email}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-y-1 w-full">
+                    <input
+                      type="tel"
+                      name="phone_number"
+                      placeholder="Phone Number"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.phone_number}
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.phone_number && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.phone_number}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Country and State */}
+                <div className="flex flex-col sm:flex-row sm:gap-4 gap-1.5">
+                  <div className="flex flex-col w-full">
+                    <select
+                      name="country"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.country}
+                      onChange={(e) => {
+                        formik.handleChange(e);
+                        fetchStates(e.target.value);
+                      }}
+                    >
+                      <option disabled value="">
+                        Select Country
+                      </option>
+                      {countries.map((country, index) => (
+                        <option key={index} value={country}>
+                          {country}
+                        </option>
+                      ))}
+                    </select>
+                    {formik.errors.country && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.country}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-y-1 w-full">
+                    <select
+                      name="state"
+                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      value={formik.values.state}
+                      onChange={formik.handleChange}
+                      disabled={!formik.values.country}
+                    >
+                      <option disabled value="">
+                        Select State
+                      </option>
+                      {states.map((state, index) => (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                    {formik.errors.state && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.state}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-y-1 w-full">
+                  <textarea
+                    name="message"
+                    rows="4"
+                    placeholder="Write your message here"
+                    className="w-full p-3 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
+                    value={formik.values.message}
+                    onChange={formik.handleChange}
+                  ></textarea>
+                  {formik.errors.message && (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.message}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* <p className="text-base font-normal text-[#000000] mb-6">
-                Accept our Terms & Conditions
-              </p> */}
-
-              <button
-                type="submit"
-                className=" bg-black text-white rounded-lg px-12 py-3 flex items-center"
-              >
-                {loading ? <ClipLoader color="white" size={20} /> : "Send"}
-              </button>
+              <div className="">
+                <button
+                  type="submit"
+                  className="bg-black text-white rounded-lg px-12 py-3"
+                >
+                  {loading ? <ClipLoader color="white" size={20} /> : "Send"}
+                </button>
+              </div>
             </form>
           </div>
         </div>

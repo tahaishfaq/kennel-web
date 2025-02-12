@@ -11,11 +11,11 @@ window.$BackEndURL = "https://primary.kennelboss.app";
 const stripePromise = loadStripe("pk_test_MUCRGDLls3HZurHWRkECm1RE");
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AdoptionProvider>
       <Elements stripe={stripePromise}>
         <App />
       </Elements>
     </AdoptionProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
