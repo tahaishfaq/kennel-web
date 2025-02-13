@@ -10,6 +10,7 @@ import CityFilter from "../components/CityFilter";
 import Footer from "../components/Footer";
 import { FilterProvider } from "../context/FilterContext";
 import Testimonials from "../components/Testimonials";
+import TopHeaderBreed from "../components/TopHeaderBreed";
 
 const Home = () => {
   
@@ -17,6 +18,7 @@ const Home = () => {
     <FilterProvider>
       <div className="font-satoshi">
         <Header />
+        <TopHeaderBreed/>
         <div className="pt-8">
         <FilterBar />
         </div>

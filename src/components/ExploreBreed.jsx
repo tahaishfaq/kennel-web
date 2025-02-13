@@ -36,7 +36,9 @@ const ExploreBreed = () => {
           ? Array.from({ length: skeletonCount }).map((_, index) => (
               <SkeletonPuppyCard key={index} />
             ))
-          : breed?.map((single, index) => <BreedCards key={index} data={single} />)}
+          : breed?.map((single, index) => (
+              <BreedCards key={index} data={single} />
+            ))}
       </div>
     </div>
   );

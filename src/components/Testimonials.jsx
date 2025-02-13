@@ -49,13 +49,14 @@ const testimonials = [
 export default function Testimonials() {
   return (
     <div className="mx-auto max-w-7xl py-10 font-satoshi sm:px-0 px-4">
-      <div className="max-w-md mx-auto text-center">
+      <div className="max-w-md mx-auto text-center space-y-1">
         <h2 className="text-[28px] font-medium text-[#2E2E2E]">
-          Users Testimonials
+          What Our Customers Say
         </h2>
         <p className="text-[#000000CC] text-[16px]">
-          There are many variations of passages of Lorem Ipsum available but the
-          majority have suffered alteration in some form.
+          Real stories, real experiences, and
+          heartfelt testimonials from those who found their perfect furry
+          companion with us.
         </p>
       </div>
 

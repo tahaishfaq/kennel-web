@@ -2,7 +2,9 @@ import React from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import aboutbg from "../../assets/aboutus-bg.jpeg";
+import { useNavigate } from "react-router-dom";
 const AboutUs = () => {
+  const navigate = useNavigate()
   return (
     <>
       <NavBar />
@@ -81,7 +83,7 @@ const AboutUs = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 items-start ">
-              <div className="order-last">
+              <div className="sm:order-first order-last">
                 <img
                   src="https://s3-alpha-sig.figma.com/img/a7c5/6dcb/5e9c0d4695b2a35882d228fd20812c57?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Xo~P61AVj-zAKVPzzP42mVC1GrI4qRVU-4BML~71q~f62FVWtwKuLEmfNf5RSnyZKAnV-Qitfr0oTz0m1qLDcJjFHB-NnM3HNjr3EssVTLDhQy1Q2Zu-rvKAzRMTLrjZwzMFpMusoe2mTbXVm-LuhQaUl5XZl8apcUPmoPSuSlk1IVzNB0-7v~LdDi0jZIUGQdd1PJGKfc2Ngxw4XlEZdaL07FScTrSDhB-PJbaVigNYIDsHlKjQdVGVO3r3wydIw3AndRZVAhkgE0s9TI44bWzjq4mXx-C~0q9w453D8PEssA1umxkLoB9eLFSQuv-mf6vCHf~ka89AiXfPRx463g__"
                   alt="About Us"
@@ -136,7 +138,7 @@ const AboutUs = () => {
                 pet, and every pet has a home" is not just a tagline. It is the
                 vision that fuels our innovation and dedication, pushing us to
                 consistently find new solutions for challenges that pets and
-                their owners face.
+                their owners face."
               </p>
             </div>
 
@@ -151,7 +153,7 @@ const AboutUs = () => {
                   part of the future-proof support network that ensures pets
                   find their forever homes.
                 </p>
-                <button className="mt-4 bg-black text-white px-[22px] py-[10px] rounded-lg">
+                <button onClick={()=>navigate("/contact-us")} className="mt-4 bg-black text-white px-[22px] py-[10px] rounded-lg">
                   Join PickMePets
                 </button>
               </div>
