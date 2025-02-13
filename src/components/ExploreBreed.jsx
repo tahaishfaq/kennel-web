@@ -12,7 +12,7 @@ const ExploreBreed = () => {
     const fetchBreeds = async () => {
       try {
         const response = await axios.get(
-          `${window.$BackEndURL}/api/resource/Breeds?fields=["*"]&order_by=modified desc&limit=12`
+          `${window.$BackEndURL}/api/resource/Breeds?fields=["*"]&filters=[["top_breed","=","1"]]`
         );
         console.log("Breed", response?.data?.data);
         setBreed(response?.data?.data);
@@ -31,7 +31,7 @@ const ExploreBreed = () => {
       <div className="flex items-center justify-between">
         <h1 className="lg:text-4xl text-xl font-medium">Explore Breed</h1>
       </div>
-      <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-1 items-start gap-5">
+      <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 items-start sm:gap-5 gap-4">
         {loading
           ? Array.from({ length: skeletonCount }).map((_, index) => (
               <SkeletonPuppyCard key={index} />

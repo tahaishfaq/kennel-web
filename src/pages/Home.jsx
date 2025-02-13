@@ -9,6 +9,7 @@ import StateFilter from "../components/StateFilter";
 import CityFilter from "../components/CityFilter";
 import Footer from "../components/Footer";
 import { FilterProvider } from "../context/FilterContext";
+import Testimonials from "../components/Testimonials";
 
 const Home = () => {
   
@@ -22,6 +23,7 @@ const Home = () => {
         <Puppy />
         <Banner />
         <ExploreBreed />
+        <Testimonials />
         <Footer />
         {/* <div className="flex flex-col gap-y-16 lg:items-start items-center py-10 lg:px-0 px-2 max-w-7xl mx-auto">
           <div className="w-full">

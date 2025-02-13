@@ -4,7 +4,7 @@ const BreedCards = ({ data }) => {
   return (
     <div className="flex flex-col items-center gap-y-2.5 cursor-pointer">
       {/* Circular Image */}
-      <div className="w-[196px] h-[196px] rounded-full overflow-hidden border border-gray-300 shadow-md">
+      <div className="sm:w-[196px] sm:h-[196px] w-[150px] h-[150px] rounded-full overflow-hidden border border-gray-300 shadow-md">
         <img
           src={
             data?.breed_image

@@ -8,7 +8,7 @@ import { FaRegCirclePlay } from "react-icons/fa6";
 const Banner = () => {
   return (
     <div className="mx-auto max-w-7xl lg:py-24 md:py-14 py-14 sm:px-0 md:px-4 px-4">
-      <div className="bg-[#D3F26A] lg:p-8 rounded-[12px] flex lg:flex-row flex-col items-center justify-between lg:h-[219px] pb-4 px-4 gap-y-4 ">
+      <div className="bg-[#9EF6DE] lg:p-8 rounded-[12px] flex lg:flex-row flex-col items-center justify-between lg:h-[219px] pb-4 px-4 gap-y-4 ">
         <div className="flex lg:flex-row flex-col items-center gap-8">
           <img
             src={banner}
@@ -16,10 +16,10 @@ const Banner = () => {
             className="lg:max-w-[374px] h-auto lg:mt-0 -mt-16"
           />
           <div>
-            <h1 className="lg:text-4xl text-[25px] font-semibold  text-black ">
-              Let our Wizard help you! 🪄
+            <h1 className="lg:text-4xl capitalize text-[25px] font-semibold  text-black ">
+              Video Chat with Puppy
             </h1>
-            <p className="text-[16px] text-[#000000CC] mt-0 lg:mt-3">
+            <p className="text-sm text-[#000000CC] mt-0 lg:mt-3">
               Find your perfect puppy with our interactive Puppy.
             </p>
           </div>
