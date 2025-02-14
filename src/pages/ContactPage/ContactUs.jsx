@@ -24,15 +24,20 @@ const ContactUs = () => {
       message: Yup.string().required("Message is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
+      console.log(values)
       try {
-        await axios.post(
-          `${window.$BackEndURL}/api/resource/PickMePets Contact Us`,
-          values
-        );
-        toast.success("Message sent successfully!");
-        resetForm();
+        await axios
+          .post(
+            `${window.$BackEndURL}/api/method/pickmepets-contact-us`,
+            values
+          )
+          .then((res) => {
+            console.log("contact", res?.data)
+            toast.success("Message sent successfully!");
+            resetForm();
+          });
       } catch (error) {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(error);
       }
     },
   });
@@ -54,7 +59,6 @@ const ContactUs = () => {
           </div>
 
           <div className="bg-white border sm:px-6 px-4 py-4 rounded-[12px] shadow-lg grid md:grid-cols-2 gap-8">
-            
             <div className="space-y-6">
               <div>
                 <p className="text-[18px] mb-1.5">Get in touch</p>
@@ -138,7 +142,6 @@ const ContactUs = () => {
               </form>
             </div>
 
-            
             <div className="text-center space-y-8">
               <h3 className="text-[24px] font-medium">Our Via Email</h3>
               <div className="space-y-4">

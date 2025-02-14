@@ -94,20 +94,20 @@ const NavBar = () => {
           >
             Home
           </Link>
-          <Link
+          {/* <Link
             to="/category"
             className="block py-2 hover:text-gray-600 transition-colors duration-200"
           >
             Category
-          </Link>
+          </Link> */}
           <Link
-            to="/about"
+            to="/about-us"
             className="block py-2 hover:text-gray-600 transition-colors duration-200"
           >
             About
           </Link>
           <Link
-            to="/contact"
+            to="/contact-us"
             className="block py-2 hover:text-gray-600 transition-colors duration-200"
           >
             Contact
