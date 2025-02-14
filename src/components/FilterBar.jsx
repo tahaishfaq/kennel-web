@@ -53,7 +53,7 @@ const FilterBar = () => {
   useEffect(() => {
     try {
       axios
-        .get(`${window.$BackEndURL}/api/resource/Breeds?fields=["*"]`)
+        .get(`${window.$BackEndURL}/api/resource/Breeds?fields=["*"]&limit_page_length=2000&limit_start=0`)
         .then((res) => {
           console.log("Breed", res?.data?.data);
           setBreed(res?.data?.data);

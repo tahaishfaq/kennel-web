@@ -17,6 +17,7 @@ import HealthGurantee from "./pages/HealthGuranteePage/HealthGurantee";
 import FAQ from "./components/FAQ";
 import RefundPolicy from "./pages/PrivacyPolicy/RefundPolicy";
 import ComingSoonPage from "./pages/ComingSoonPage/ComingSoonPage";
+import BreedBasedPuppies from "./components/BreedBasedPuppies";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -40,6 +41,7 @@ function App() {
         <Route path="/health-gurantee" element={<HealthGurantee />} />
         <Route path="/faqs" element={<FAQ />} />
         <Route path="/*" element={<ComingSoonPage />} />
+        <Route path="/breed-based-puppy/:name" element={<BreedBasedPuppies />} />
       </Routes>
     </Router>
   );

@@ -4,8 +4,10 @@ import banner2 from "../assets/banner-img.png";
 import rect1 from "../assets/Rectangle 1.png";
 import rect2 from "../assets/Rectangle 9.png";
 import { FaRegCirclePlay } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate  = useNavigate()
   return (
     <div className="mx-auto max-w-7xl lg:py-24 md:py-14 py-14 sm:px-0 md:px-4 px-4">
       <div className="bg-[#9EF6DE] lg:p-8 rounded-[12px] flex lg:flex-row flex-col items-center justify-between lg:h-[219px] pb-4 px-4 gap-y-4 ">
@@ -24,7 +26,7 @@ const Banner = () => {
             </p>
           </div>
         </div>
-        <button className="bg-black text-white py-[12px] px-[28px] text-sm rounded-[6px] w-full sm:w-32">
+        <button onClick={()=> navigate("/collection")}className="bg-black text-white py-[12px] px-[28px] text-sm rounded-[6px] w-full sm:w-32">
           Shop Now
         </button>
       </div>
