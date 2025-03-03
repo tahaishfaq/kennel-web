@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FaRegCircle } from "react-icons/fa";
 import { RiShareLine } from "react-icons/ri";
 import moment from "moment";
+import { PiTrademarkRegistered } from "react-icons/pi";
+import { IoCalendarNumberOutline } from "react-icons/io5";
 
 const PuppyCard = ({ data }) => {
   const navigate = useNavigate();
@@ -19,10 +21,13 @@ const PuppyCard = ({ data }) => {
   const tags = [
     { icon: null, text: data?.litter?.litter_name },
     { icon: "collar", text: data?.size },
+    { icon: "home", text: calculateGoHomeDate(data?.go_home_date_duration) },
     { icon: "palette", text: data?.coat_color },
     { icon: "id", text: data?.gender },
-    { icon: "dog", text: data?.litter_breed_name },
     { icon: "weight", text: data?.weight + " " + data?.weight_unit },
+    { icon: "dob", text: data?.litter?.date_of_birth },
+    { icon: "registration_type", text: data?.registration_type },
+    { icon: "dog", text: data?.litter_breed_name },
   ];
 
   const iconMapping = {
@@ -224,6 +229,48 @@ const PuppyCard = ({ data }) => {
         />
       </svg>
     ),
+
+    home: ( <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_5815_26646)">
+        <path
+          d="M5.25 12.2487V8.7487C5.25 8.43928 5.37292 8.14253 5.59171 7.92374C5.8105 7.70495 6.10725 7.58203 6.41667 7.58203H7.58333C7.72742 7.58203 7.86567 7.60828 7.99283 7.65611"
+          stroke="black"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M11.0833 7H12.25L7 1.75L1.75 7H2.91667V11.0833C2.91667 11.3928 3.03958 11.6895 3.25838 11.9083C3.47717 12.1271 3.77391 12.25 4.08333 12.25H7"
+          stroke="black"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M9.33594 12.8346L12.2526 9.91797"
+          stroke="black"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12.25 12.543V9.91797H9.625"
+          stroke="black"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_5815_26646">
+          <rect width="14" height="14" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>),
+    registration_type: (<PiTrademarkRegistered />),
+    dob: (<IoCalendarNumberOutline />)
   };
 
   return (
@@ -237,7 +284,7 @@ const PuppyCard = ({ data }) => {
           }
           onClick={handleCardClick}
           alt="puppy"
-          className="rounded-[4px] h-[206px] w-full object-cover object-center"
+          className="rounded-[4px] aspect-square w-full object-cover object-center"
         />
         {/* <span className="absolute text-[12px] flex items-center gap-x-1 right-2 bottom-2 bg-white py-[6px] px-[4px] rounded-[4px]">
           <svg
@@ -306,7 +353,7 @@ const PuppyCard = ({ data }) => {
           </div>
 
           <div className="flex flex-col items-end">
-            <span className="text-[12px] flex items-center gap-x-1 text-[#71C900]  bg-[#71C90014] py-[6px] px-[4px] rounded-[4px]">
+            {/* <span className="text-[12px] flex items-center gap-x-1 text-[#71C900]  bg-[#71C90014] py-[6px] px-[4px] rounded-[4px]">
               <svg
                 width="14"
                 height="14"
@@ -348,8 +395,8 @@ const PuppyCard = ({ data }) => {
               </svg>
 
               {calculateGoHomeDate(data?.go_home_date_duration)}
-            </span>
-            {/* <p className="font-medium text-[18px] ">{"$" + data?.price}</p> */}
+            </span> */}
+            <p className="font-medium text-[18px] ">{"$" + data?.price}</p>
             {/* <span className="text-xs underline">Financing options available</span> */}
           </div>
         </div>

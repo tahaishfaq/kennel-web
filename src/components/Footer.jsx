@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaXTwitter, FaInstagram } from "react-icons/fa6";
-import logo from "../assets/favicon.jpg";
+import logo from "../assets/logo.png";
 import trust from "../assets/trust-pilot.png";
 import { IoArrowForwardOutline } from "react-icons/io5";
 
@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="sm:max-w-[250px] space-y-2">
             <img
               src={logo}
-              className="w-[80px] h-[80px] rounded-lg"
+              className="w-[80px] h-[80px] rounded-lg transparent-logo"
               alt="logo"
             />
             <p className="text-[14px]">

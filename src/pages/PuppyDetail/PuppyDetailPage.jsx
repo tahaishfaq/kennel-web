@@ -43,7 +43,7 @@ const PuppyDetailPage = () => {
       </div>
 
       <StickyBottomBar  puppyDetail={puppyDetail}/>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

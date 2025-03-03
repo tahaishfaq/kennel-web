@@ -18,6 +18,7 @@ import FAQ from "./components/FAQ";
 import RefundPolicy from "./pages/PrivacyPolicy/RefundPolicy";
 import ComingSoonPage from "./pages/ComingSoonPage/ComingSoonPage";
 import BreedBasedPuppies from "./components/BreedBasedPuppies";
+import ScrollToTop from "./components/global/ScrollToTop";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<PuppyCollection />} />

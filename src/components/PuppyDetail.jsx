@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaLocationArrow } from "react-icons/fa";
+import { FaLocationArrow, FaMicrochip } from "react-icons/fa";
 import { MdOutlineMessage } from "react-icons/md";
 import {
   TbClockRecord,
@@ -7,6 +7,11 @@ import {
   TbDog,
   TbHomeShare,
   TbArrowsShuffle,
+  TbCalendar,
+  TbCheck,
+  TbDna,
+  TbScissors,
+  TbId,
 } from "react-icons/tb";
 import { IoColorPaletteOutline, IoPawOutline } from "react-icons/io5";
 import { BiRuler, BiInjection, BiDollar } from "react-icons/bi";
@@ -258,17 +263,19 @@ const PuppyDetail = ({ puppyDetail }) => {
                     Adopt Now Pay Latter
                   </span>
                 </div>
-                <div className="flex items-center gap-x-1 sm:gap-x-3 ">
-                  <img
-                    src={veterian}
-                    alt="icon"
-                    className="sm:w-[30px] sm:h-[30px] w-[25px] h-[25px]"
-                  />
+                {puppyDetail?.sync_vet_checked == 1 && (
+                  <div className="flex items-center gap-x-1 sm:gap-x-3 ">
+                    <img
+                      src={veterian}
+                      alt="icon"
+                      className="sm:w-[30px] sm:h-[30px] w-[25px] h-[25px]"
+                    />
 
-                  <span className="sm:text-[14px] text-xs font-medium">
-                    100% Vet Check
-                  </span>
-                </div>
+                    <span className="sm:text-[14px] text-xs font-medium">
+                      100% Vet Check
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -376,6 +383,16 @@ const PuppyDetail = ({ puppyDetail }) => {
                   label="Generation:"
                   value={puppyDetail?.generation_breed || "N/A"}
                 />
+                <DetailItem
+                  icon={<TbCalendar />}
+                  label="Date of Birth:"
+                  value={puppyDetail?.litter?.date_of_birth || "N/A"}
+                />
+                <DetailItem
+                  icon={<TbCheck />}
+                  label="Vet Checked:"
+                  value={puppyDetail?.sync_vet_checked ? "Yes" : "No"}
+                />
               </div>
 
               <div className="flex flex-col space-y-4 sm:px-6">
@@ -396,6 +413,16 @@ const PuppyDetail = ({ puppyDetail }) => {
                   label="Size:"
                   value={puppyDetail?.size || "N/A"}
                 />
+                <DetailItem
+                  icon={<FaMicrochip />}
+                  label="Microchipped:"
+                  value={puppyDetail?.sync_microchipped ? "Yes" : "No"}
+                />
+                <DetailItem
+                  icon={<TbDna />}
+                  label="Dewormed:"
+                  value={puppyDetail?.sync_dewormed ? "Yes" : "No"}
+                />
               </div>
 
               <div className="flex flex-col space-y-4 sm:pl-6">
@@ -412,9 +439,17 @@ const PuppyDetail = ({ puppyDetail }) => {
                 <DetailItem
                   icon={<BiInjection />}
                   label="Vaccinated:"
-                  value={
-                    puppyDetail?.vaccinations_table?.length > 0 ? "Yes" : "No"
-                  }
+                  value={puppyDetail?.sync_vaccinated ? "Yes" : "No"}
+                />
+                <DetailItem
+                  icon={<TbScissors />}
+                  label="Neutered:"
+                  value={puppyDetail?.sync_neutered ? "Yes" : "No"}
+                />
+                <DetailItem
+                  icon={<TbId />}
+                  label="Registered:"
+                  value={puppyDetail?.sync_registered ? "Yes" : "No"}
                 />
               </div>
             </div>

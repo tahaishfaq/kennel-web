@@ -36,3 +36,7 @@
 .swiper-pagination-bullet-active {
   background-color: black !important;
 }
+
+.transparent-logo {
+  filter: brightness(0) invert(0);
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logo from "../assets/favicon.jpg";
+import logo from "../assets/logo.png";
 
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,7 +37,7 @@ const NavBar = () => {
         {/* Logo and Navigation Links */}
         <div className="flex items-center gap-x-10">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-[56px] h-[56px] rounded-lg" />
+            <img src={logo} alt="logo" className="w-[56px] h-[56px] rounded-lg transparent-logo" />
           </Link>
           <div className="hidden sm:flex items-center gap-x-8 text-[16px] font-normal cursor-pointer">
             <Link
