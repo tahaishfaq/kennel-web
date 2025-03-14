@@ -3,6 +3,9 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import aboutbg from "../../assets/aboutus-bg.jpeg";
 import { useNavigate } from "react-router-dom";
+import aboutus1 from "../../assets/about-us1.jpeg";
+import aboutus2 from "../../assets/about-us2.jpeg";
+
 const AboutUs = () => {
   const navigate = useNavigate()
   return (
@@ -33,7 +36,7 @@ const AboutUs = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8 gap-6 items-start ">
               <div className="sm:order-1 order-last">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/0ef1/135d/dbe64f0a39218bfe2e3029a5c863d8c8?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=B6SypbjqOFPTDvjD1EgyRtTqMgeeHep9xYCe0AD~2LDw66SYEcyr5FcToK2SITFRZWeZgy9cZU~ba~q-BFWtUkYc~qREZSrxbiuc~KaPiWrpe~dHw3C1cN1DBGTgFceQb0eh76JhZfnxrM8jahrZs91LvDgkIohPJcJL3RSSKs8zLAk~x1AbAvJhGiUg3iMsnBbZCAnEl~6zUtBEfOU-HKRMshN3apJChyNYTutTjZEVUS8eyN7pmmBYzb0ExhxJ20FsLumIFHQ0H3wMBGvDwJh~Zv7ltb2PnTZE5oyR~H~G-oH1vaj0jINIc804dSXn0FT9fTtnGrIDVb0c5w-MRQ__"
+                  src={aboutus1}
                   alt="About Us"
                   className="rounded-lg shadow-md object-cover aspect-[9/10]"
                 />
@@ -85,7 +88,7 @@ const AboutUs = () => {
             <div className="grid md:grid-cols-2 gap-8 items-start ">
               <div className="sm:order-first order-last">
                 <img
-                  src="https://s3-alpha-sig.figma.com/img/a7c5/6dcb/5e9c0d4695b2a35882d228fd20812c57?Expires=1739750400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Xo~P61AVj-zAKVPzzP42mVC1GrI4qRVU-4BML~71q~f62FVWtwKuLEmfNf5RSnyZKAnV-Qitfr0oTz0m1qLDcJjFHB-NnM3HNjr3EssVTLDhQy1Q2Zu-rvKAzRMTLrjZwzMFpMusoe2mTbXVm-LuhQaUl5XZl8apcUPmoPSuSlk1IVzNB0-7v~LdDi0jZIUGQdd1PJGKfc2Ngxw4XlEZdaL07FScTrSDhB-PJbaVigNYIDsHlKjQdVGVO3r3wydIw3AndRZVAhkgE0s9TI44bWzjq4mXx-C~0q9w453D8PEssA1umxkLoB9eLFSQuv-mf6vCHf~ka89AiXfPRx463g__"
+                  src={aboutus2}
                   alt="About Us"
                   className="rounded-lg shadow-md object-cover aspect-[9/10]"
                 />

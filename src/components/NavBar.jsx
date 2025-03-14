@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
+const navigation = [
+  { name: "Home", href: "/" },
+  // { name: "Category", href: "#" },
+  { name: "About", href: "/about-us" },
+  { name: "Contact", href: "/contact-us" },
+];
+
 const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,45 +36,32 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-30 px-4 sm:px-8 py-2 bg-white transition-shadow duration-300 ${
-        isScrolled ? "shadow-lg" : "shadow-none"
+      className={`fixed top-0 w-full z-30 bg-white transition-shadow duration-300 font-poppins ${
+        isScrolled ? "shadow-md" : "shadow-none"
       }`}
     >
-      <div className="mx-auto max-w-7xl flex items-center justify-between">
-        {/* Logo and Navigation Links */}
-        <div className="flex items-center gap-x-10">
-          <Link to="/">
-            <img src={logo} alt="logo" className="w-[56px] h-[56px] rounded-lg transparent-logo" />
-          </Link>
-          <div className="hidden sm:flex items-center gap-x-8 text-[16px] font-normal cursor-pointer">
-            <Link
-              to="/"
-              className="hover:text-gray-600 transition-colors duration-200"
-            >
-              Home
-            </Link>
-            {/* <Link
-              to="/category"
-              className="hover:text-gray-600 transition-colors duration-200"
-            >
-              Category
-            </Link> */}
-            <Link
-              to="/about-us"
-              className="hover:text-gray-600 transition-colors duration-200"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact-us"
-              className="hover:text-gray-600 transition-colors duration-200"
-            >
-              Contact
-            </Link>
+      <div className="mx-auto max-w-7xl flex items-center justify-between sm:px-0 px-4 py-2">
+        <Link to="/">
+          <img
+            src={logo}
+            alt="logo"
+            className="w-[56px] h-[56px] rounded-lg transparent-logo"
+          />
+        </Link>
+        <div className="flex justify-end items-center w-full ">
+          <div className="hidden lg:flex lg:gap-x-12 items-center">
+            {navigation?.map((item) => (
+              <Link
+                to={item.href}
+                key={item?.name}
+                className="text-sm font-normal leading-6 text-black cursor-pointer"
+              >
+                {item?.name}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Mobile Menu Toggle Button */}
         <div className="sm:hidden">
           <button
             onClick={toggleMobileMenu}
@@ -82,7 +76,6 @@ const NavBar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <div
           className={`${
             isMobileMenuOpen ? "block" : "hidden"
@@ -94,12 +87,7 @@ const NavBar = () => {
           >
             Home
           </Link>
-          {/* <Link
-            to="/category"
-            className="block py-2 hover:text-gray-600 transition-colors duration-200"
-          >
-            Category
-          </Link> */}
+
           <Link
             to="/about-us"
             className="block py-2 hover:text-gray-600 transition-colors duration-200"
@@ -113,13 +101,6 @@ const NavBar = () => {
             Contact
           </Link>
         </div>
-
-        {/* Call-to-Action Button */}
-        {/* <div className="hidden sm:block">
-          <button className="bg-black text-white px-6 py-2.5 rounded-md hover:bg-gray-800 transition-colors duration-200">
-            Request sent
-          </button>
-        </div> */}
       </div>
     </nav>
   );

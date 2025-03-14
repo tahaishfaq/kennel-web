@@ -21,14 +21,14 @@ export default function Header() {
 
   return (
     <>
-      <div className="relative bg-gray-900 min-h-screen max-w-screen">
+      <div className="relative bg-gray-900 min-h-screen max-w-screen ">
         <div className="mx-auto max-w-7xl">
           <header className="absolute inset-x-0 top-0 z-50">
             <nav
               aria-label="Global"
-              className="mx-auto max-w-7xl flex items-center  sm:px-0 px-4"
+              className="mx-auto max-w-7xl flex items-center  sm:px-0 px-4 py-2"
             >
-              <img src={logo} alt="logo" className="w-28" />
+              <img src={logo} alt="logo" className="w-[56px] h-[56px] rounded-lg" />
               <div className="flex justify-end items-center w-full ">
                 <div className="hidden lg:flex lg:gap-x-12 items-center">
                   {navigation?.map((item) => (
@@ -40,12 +40,6 @@ export default function Header() {
                       {item?.name}
                     </Link>
                   ))}
-                  {/* <button
-                    onClick={() => setOpen(!open)}
-                    className="bg-white text-black px-4 py-2 rounded lg:block md:block hidden"
-                  >
-                    Request sent
-                  </button> */}
                 </div>
               </div>
               <div className="flex lg:hidden">
@@ -90,14 +84,6 @@ export default function Header() {
                         </Link>
                       ))}
                     </div>
-                    {/* <div className="py-6">
-                      <button
-                        onClick={() => setOpen(!open)}
-                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
-                      >
-                        Request Send
-                      </button>
-                    </div> */}
                   </div>
                 </div>
               </DialogPanel>
@@ -114,7 +100,6 @@ export default function Header() {
             className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
           >
             <source src={video} type="video/mp4" />
-            {/* Fallback content for unsupported browsers */}
             Your browser does not support the video tag.
           </video>
           <div className="absolute inset-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center lg:pt-0 pt-16 lg:px-0 px-4">

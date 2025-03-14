@@ -32,6 +32,7 @@ import { FiMapPin } from "react-icons/fi";
 import veterian from "../assets/veterinarian (1) 1.png";
 import { BsLaptop } from "react-icons/bs";
 import gender from "../assets/gender.png";
+import { VscChip } from "react-icons/vsc";
 
 const PuppyDetail = ({ puppyDetail }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -414,7 +415,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                   value={puppyDetail?.size || "N/A"}
                 />
                 <DetailItem
-                  icon={<FaMicrochip />}
+                  icon={<VscChip />}
                   label="Microchipped:"
                   value={puppyDetail?.sync_microchipped ? "Yes" : "No"}
                 />

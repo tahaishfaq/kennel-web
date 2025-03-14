@@ -6,11 +6,15 @@ import picture from "../assets/Frame 1000004378.png";
 import { LuPenSquare } from "react-icons/lu";
 import { IoCloseSharp } from "react-icons/io5";
 import { ClipLoader, PuffLoader } from "react-spinners";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [ticketHash, setTicketHash] = useState("");
+  const navigate = useNavigate();
 
   // Fetch countries on component mount
   useEffect(() => {
@@ -65,6 +69,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
       country: Yup.string().required("Required"),
       state: Yup.string().required("Required"),
       message: Yup.string().required("Message is required"),
+      address: Yup.string().required("Address is required"),
     }),
     onSubmit: async (values) => {
       setLoading(true);
@@ -76,26 +81,36 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
           phone_number: values.phone_number,
           country: values.country,
           state: values.state,
+          address: values.address,
           message: values.message,
           puppy_owner: puppyDetail?.business_profile?.name,
           puppy: puppyDetail?.name,
         };
-        const response = await axios.post(
-          `${window.$BackEndURL}/api/resource/Breeder Queries`,
-          json
-        );
-        console.log("Form submitted successfully:", response.data);
-
-        setTimeout(() => {
-          setIsOpen(false);
-        }, 500);
+        await axios
+          .post(`${window.$BackEndURL}/api/method/ticket-pickmepets`, json)
+          .then((res) => {
+            console.log(res?.data?.data);
+            if (res?.data?.data?.ticket_hash) {
+              setTimeout(() => {
+                navigate(
+                  `/checkout/${res?.data?.data?.ticket_hash}`
+                );
+              }, 500);
+            }
+          });
       } catch (error) {
         console.error("There was an error submitting the form:", error);
       } finally {
         setLoading(false);
+        formik.resetForm()
       }
     },
   });
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(ticketHash);
+    toast.success("Ticket Hash copied to clipboard!");
+  };
 
   return (
     <div
@@ -154,7 +169,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                       type="text"
                       name="first_name"
                       placeholder="First Name"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.first_name}
                       onChange={formik.handleChange}
                     />
@@ -169,7 +184,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                       type="text"
                       name="last_name"
                       placeholder="Last Name"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.last_name}
                       onChange={formik.handleChange}
                     />
@@ -188,7 +203,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                       type="email"
                       name="email"
                       placeholder="Email Address"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.email}
                       onChange={formik.handleChange}
                     />
@@ -203,7 +218,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                       type="tel"
                       name="phone_number"
                       placeholder="Phone Number"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.phone_number}
                       onChange={formik.handleChange}
                     />
@@ -220,7 +235,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   <div className="flex flex-col w-full">
                     <select
                       name="country"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.country}
                       onChange={(e) => {
                         formik.handleChange(e);
@@ -245,7 +260,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   <div className="flex flex-col gap-y-1 w-full">
                     <select
                       name="state"
-                      className="w-full p-3 border border-gray-300 rounded-lg"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       value={formik.values.state}
                       onChange={formik.handleChange}
                       disabled={!formik.values.country}
@@ -269,10 +284,26 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
 
                 <div className="flex flex-col gap-y-1 w-full">
                   <textarea
+                    name="address"
+                    rows="1"
+                    placeholder="Enter your address here"
+                    className="w-full px-3 py-2 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
+                    value={formik.values.address}
+                    onChange={formik.handleChange}
+                  ></textarea>
+                  {formik.errors.address && (
+                    <div className="text-red-500 text-sm">
+                      {formik.errors.address}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-y-1 w-full">
+                  <textarea
                     name="message"
                     rows="4"
                     placeholder="Write your message here"
-                    className="w-full p-3 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
+                    className="w-full px-3 py-2 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
                     value={formik.values.message}
                     onChange={formik.handleChange}
                   ></textarea>
@@ -287,12 +318,37 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
               <div className="">
                 <button
                   type="submit"
-                  className="bg-black text-white rounded-lg px-12 py-3"
+                  className="bg-black text-white rounded-lg px-8 py-2"
                 >
                   {loading ? <ClipLoader color="white" size={20} /> : "Send"}
                 </button>
               </div>
             </form>
+
+            {/* {ticketHash && (
+              <div className="border bg-gray p-4 rounded-lg mt-4 flex flex-col items-start justify-between">
+                <h3 className="text-black">Ticket Hash</h3>
+                <div className="flex items-center gap-x-3">
+                <input
+                  type="text"
+                  value={ticketHash}
+                  readOnly
+                  style={{ padding: "8px", width: "300px" }}
+                />
+                <button onClick={copyToClipboard}>📋 Copy</button>
+                <button
+                  onClick={() =>
+                    window.open(
+                      `${ticketHash}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  🔗 Open
+                </button>
+                </div>
+              </div>
+            )} */}
           </div>
         </div>
       </div>

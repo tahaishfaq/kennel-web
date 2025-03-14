@@ -17,7 +17,7 @@ const Home = () => {
   
   return (
     <FilterProvider>
-      <div className="font-satoshi">
+      <div className="font-poppins">
         <Header />
         <TopHeaderBreed/>
         <div className="pt-8">
