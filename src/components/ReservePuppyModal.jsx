@@ -9,7 +9,7 @@ import { ClipLoader, PuffLoader } from "react-spinners";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
+const ReservePuppyModal = ({ puppyDetail, isOpen, setIsOpen }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -87,25 +87,27 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
           puppy: puppyDetail?.name,
         };
         await axios
-          .post(`${window.$BackEndURL}/api/resource/Breeder Queries`, json)
+          .post(`${window.$BackEndURL}/api/method/ticket-pickmepets`, json)
           .then((res) => {
             console.log(res?.data?.data);
-            setTimeout(() => {
-              setIsOpen(false);
-            }, 500);
+            if (res?.data?.data?.ticket_hash) {
+              setTimeout(() => {
+                navigate(`/checkout/${res?.data?.data?.ticket_hash}`);
+              }, 500);
+            }
           });
       } catch (error) {
         console.error("There was an error submitting the form:", error);
       } finally {
-        formik.resetForm();
         setLoading(false);
+        formik.resetForm();
       }
     },
   });
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(ticketHash);
-    toast.success("Ticket Hash copied to clipboard!");
+    toast.success("Reservation ID copied to clipboard!");
   };
 
   return (
@@ -117,7 +119,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
       <div className="bg-white sm:p-6 p-4 sm:mx-0 mx-2 rounded-lg shadow-lg w-full max-w-4xl h-auto sm:h-auto overflow-y-auto">
         <div className="flex justify-between items-start mb-4">
           <h2 className="text-black text-2xl font-medium">
-            Talk to {puppyDetail?.business_profile?.business_name}
+            Reserve {puppyDetail?.puppy_name}
           </h2>
           <button
             onClick={() => setIsOpen(false)}
@@ -135,7 +137,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   ? window.$BackEndURL + puppyDetail?.profile_picture
                   : picture
               }
-              alt="Dog"
+              alt="Puppy"
               className="rounded-lg w-full h-[250px] sm:h-[303px] mb-3 object-cover object-center"
             />
             <div className="text-start">
@@ -150,7 +152,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
 
           <div className="w-full sm:w-2/3">
             <h3 className="text-black text-2xl font-medium mb-4">
-              Ask about {puppyDetail?.puppy_name}
+              Submit Your Reservation for {puppyDetail?.puppy_name}
             </h3>
 
             <form
@@ -282,7 +284,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   <textarea
                     name="address"
                     rows="1"
-                    placeholder="Enter your address here"
+                    placeholder="Enter your shipping address here"
                     className="w-full px-3 py-2 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
                     value={formik.values.address}
                     onChange={formik.handleChange}
@@ -298,7 +300,7 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   <textarea
                     name="message"
                     rows="4"
-                    placeholder="Write your message here"
+                    placeholder="Add any additional details or questions about your reservation"
                     className="w-full px-3 py-2 border border-[#E0E0E0] text-[#929DA7] text-sm font-normal rounded-lg"
                     value={formik.values.message}
                     onChange={formik.handleChange}
@@ -316,35 +318,10 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
                   type="submit"
                   className="bg-black text-white rounded-lg px-8 py-2"
                 >
-                  {loading ? <ClipLoader color="white" size={20} /> : "Send"}
+                  {loading ? <ClipLoader color="white" size={20} /> : "Reserve Puppy"}
                 </button>
               </div>
             </form>
-
-            {/* {ticketHash && (
-              <div className="border bg-gray p-4 rounded-lg mt-4 flex flex-col items-start justify-between">
-                <h3 className="text-black">Ticket Hash</h3>
-                <div className="flex items-center gap-x-3">
-                <input
-                  type="text"
-                  value={ticketHash}
-                  readOnly
-                  style={{ padding: "8px", width: "300px" }}
-                />
-                <button onClick={copyToClipboard}>📋 Copy</button>
-                <button
-                  onClick={() =>
-                    window.open(
-                      `${ticketHash}`,
-                      "_blank"
-                    )
-                  }
-                >
-                  🔗 Open
-                </button>
-                </div>
-              </div>
-            )} */}
           </div>
         </div>
       </div>
@@ -352,4 +329,4 @@ const TalkToBreederPopover = ({ puppyDetail, isOpen, setIsOpen }) => {
   );
 };
 
-export default TalkToBreederPopover;
+export default ReservePuppyModal;

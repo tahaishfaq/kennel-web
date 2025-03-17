@@ -34,11 +34,29 @@ import { BsLaptop } from "react-icons/bs";
 import gender from "../assets/gender.png";
 import { VscChip } from "react-icons/vsc";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ReservePuppyModal from "./ReservePuppyModal";
+import PuppyDetailCarousel from "./PuppyDetailCarousel";
+
 const PuppyDetail = ({ puppyDetail }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isReservePuppy, setIsReservePuppy] = useState(false);
 
   const handleButtonClick = () => {
     setIsPopoverOpen(!isPopoverOpen);
+  };
+
+  const [sliderRef, setSliderRef] = useState(null);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
   };
 
   if (!puppyDetail) {
@@ -140,51 +158,7 @@ const PuppyDetail = ({ puppyDetail }) => {
 
   return (
     <div className="sm:px-0 px-4 lg:px-0 md:px-4 ">
-      <div className="flex sm:flex-row flex-col gap-3">
-        <div className="sm:w-2/3">
-          <img
-            src={`${window.$BackEndURL}${puppyDetail?.images
-              ?.slice(0, 1)
-              ?.map((image) => image.image)}`}
-            alt="Primary Puppy"
-            className="rounded-lg w-full sm:h-[412px] h-[272px]  object-cover"
-          />
-        </div>
-
-        <div className="flex flex-col gap-4 sm:w-1/3 ">
-          {puppyDetail?.images?.slice(1, 3)?.map((image, index) => (
-            <img
-              key={index}
-              src={`${window.$BackEndURL}${image?.image}`}
-              alt={`Puppy ${index + 1}`}
-              className="rounded-lg w-full sm:h-[198px] h-[272px] object-center object-cover"
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* <div className="flex sm:flex-row flex-col gap-3">
-  <div className="sm:w-2/3">
-    <img
-      src={`${window.$BackEndURL}${puppyDetail?.images
-        ?.slice(0, 1)
-        ?.map((image) => image.image)}`}
-      alt="Primary Puppy"
-      className="rounded-lg w-full aspect-[4/3.1] object-cover"
-    />
-  </div>
-
-  <div className="flex flex-col gap-3 sm:w-1/3">
-    {puppyDetail?.images?.slice(1, 3)?.map((image, index) => (
-      <img
-        key={index}
-        src={`${window.$BackEndURL}${image?.image}`}
-        alt={`Puppy ${index + 1}`}
-        className="rounded-lg w-full aspect-[4/3] object-cover"
-      />
-    ))}
-  </div>
-</div> */}
+      <PuppyDetailCarousel puppyDetail={puppyDetail} />
 
       <div className="py-4">
         <div className="flex sm:flex-row flex-col sm:justify-between sm:items-start gap-4">
@@ -196,25 +170,20 @@ const PuppyDetail = ({ puppyDetail }) => {
                   alt="icon"
                   className="sm:w-6 sm:h-6 w-5 h-5 object-contain"
                 />
-                <h1 className="sm:text-[26px] text-[18px] font-medium text-[#000000]">
+                <h1 className="sm:text-[26px] text-[18px] capitalize font-medium text-[#000000]">
                   {puppyDetail?.puppy_name}
                 </h1>
               </div>
-
-              <span className="sm:px-1.5 px-1 py-1 sm:text-sm text-xs bg-[#71C900] text-white rounded-[4px] flex items-center gap-x-1">
-                Bring Home Date:{" "}
-                {calculateGoHomeDate(puppyDetail?.go_home_date_duration)}
-              </span>
             </div>
             <div className="flex items-center gap-x-3 sm:gap-x-4 pl-0.5">
               <FiMapPin className="sm:w-5 sm:h-5 h-4 w-4 text-[#000000]" />
               <h2 className="text-[16px] text-[#000000]">
-                {puppyDetail?.location}
+                {puppyDetail?.location?.split(", ")?.slice(1)?.join(", ")}
               </h2>
             </div>
             <div className="">
               <div className="flex flex-row sm:items-center sm:gap-x-3 justify-evenly bg-white border  py-[9px] px-2 sm:px-[12px] rounded-[10px] ">
-                <div className="flex items-center gap-x-1 sm:gap-x-3 ">
+                <div className="flex items-center gap-x-1 sm:gap-x-2 ">
                   <svg
                     width="30"
                     height="30"
@@ -222,7 +191,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_5745_11740)">
+                    <g clipPath="url(#clip0_5745_11740)">
                       <path
                         d="M27 11.9472C27.0004 12.3536 26.9783 12.7597 26.9338 13.1637C26.4 18.212 22.531 23.521 15 25.9665C7.48139 23.5334 3.60001 18.241 3.06622 13.1637C3.02158 12.7597 2.99948 12.3536 3.00001 11.9472C3.00001 7.93338 5.44966 4.44924 9.00001 4.44924C10.1563 4.447 11.299 4.69842 12.3476 5.18579L18.2979 4.92096C19.1641 4.60692 20.0787 4.44726 21 4.44924C24.5504 4.44924 27 7.93338 27 11.9472Z"
                         fill="#DF4D60"
@@ -261,7 +230,7 @@ const PuppyDetail = ({ puppyDetail }) => {
                   </svg>
 
                   <span className="sm:text-[14px] text-xs font-medium">
-                    Adopt Now Pay Latter
+                    Adopt Now, Pay Later
                   </span>
                 </div>
                 {puppyDetail?.sync_vet_checked == 1 && (
@@ -282,9 +251,15 @@ const PuppyDetail = ({ puppyDetail }) => {
           </div>
 
           <div className="sm:flex hidden sm:items-end  flex-col">
-            <p className="text-[20px] sm:text-[28px] font-medium">
-              USD ${puppyDetail?.price}
-            </p>
+            <div className="flex items-center gap-x-32 ">
+              <span className="sm:px-2.5 px-1.5 py-1.5 sm:text-sm text-xs bg-[#71C900] text-white rounded-[4px] flex items-center gap-x-1">
+                Bring Home Date:{" "}
+                {calculateGoHomeDate(puppyDetail?.go_home_date_duration)}
+              </span>
+              <p className="text-[20px] sm:text-[28px] font-medium">
+                USD ${puppyDetail?.price}
+              </p>
+            </div>
             <p className="text-[#000000CC] sm:text-[16px] text-[14px]">
               Initial deposit amount will be{" "}
               <span className="text-[#000] font-semibold">
@@ -293,13 +268,20 @@ const PuppyDetail = ({ puppyDetail }) => {
             </p>
             <div className="flex gap-x-2 items-center pt-3">
               <button
-                onClick={handleButtonClick}
+                onClick={() => setIsReservePuppy(true)}
                 className="border-[1.5px] border-black flex items-center gap-x-2 sm:px-6 px-4  py-2 rounded-[6px]"
               >
                 <BsLaptop className="w-5 h-5" />
 
-                <span className="text-[16px] font-medium">Video Chat</span>
+                <span className="text-[16px] font-medium">Reserve</span>
               </button>
+              {isReservePuppy && (
+                <ReservePuppyModal
+                  puppyDetail={puppyDetail}
+                  isOpen={isReservePuppy}
+                  setIsOpen={setIsReservePuppy}
+                />
+              )}
               <button
                 onClick={handleButtonClick}
                 className=" bg-black flex text-white items-center gap-x-2 sm:px-6 px-4  py-2 rounded-[6px]"

@@ -45,7 +45,7 @@ const NavBar = () => {
           <img
             src={logo}
             alt="logo"
-            className="w-[56px] h-[56px] rounded-lg transparent-logo"
+            className="w-[56px] h-[56px] rounded-lg object-cover transparent-logo"
           />
         </Link>
         <div className="flex justify-end items-center w-full ">

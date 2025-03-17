@@ -40,3 +40,39 @@
 .transparent-logo {
   filter: brightness(0) invert(0);
 }
+
+.slick-dots {
+  bottom: 40px !important; /* Adjust vertical position */
+}
+
+.slick-dots li {
+  width: 15px; /* Increase dot size */
+  height: 15px;
+  margin: 0 5px;
+}
+
+.slick-dots li button::before {
+  font-size: 12px; /* Bigger dot indicator */
+  color: #888; /* Default gray */
+  opacity: 1;
+  transform: scale(1.5); /* Makes dots larger */
+}
+
+.slick-dots li.slick-active button::before {
+  color: #000; /* Active dot is black */
+  opacity: 1;
+  transform: scale(1.8); /* Slightly bigger when active */
+}
+
+@media (max-width: 768px) {
+  .slick-dots {
+    bottom: 10px !important; /* Lower the dots for mobile */
+  }
+
+  .slick-dots li {
+    width: 10px; /* Increase dot size */
+    height: 10px;
+    margin: 0 5px;
+  }
+
+}
