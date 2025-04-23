@@ -32,7 +32,7 @@ export default function Parents({ puppyDetail }) {
   return (
     <div className="sm:pt-16 pt-4 font-satoshi">
       <div className="max-w-7xl mx-auto space-y-6 sm:px-0 px-4">
-        <h2 className="sm:text-[28px] hidden font-medium">Meet Caroline's parents</h2>
+        <h2 className="sm:text-[28px] text-[24px] font-medium">Meet {puppyDetail?.puppy_name} Parents</h2>
         <div className="sm:grid hidden grid-cols-1 gap-10 border border-[#0000001F] p-4 rounded-[12px]">
           {dogs.map((dog, index) => (
             <ChampParentCard key={index} {...dog} />
@@ -41,10 +41,10 @@ export default function Parents({ puppyDetail }) {
 
         <div className="sm:pt-6 max-w-xl mx-auto space-y-2.5 sm:space-y-4">
           <h2 className="sm:text-[28px] text-[24px] font-medium text-start sm:text-center">
-            Meet Champ's breeder
+            Meet {puppyDetail?.puppy_name} Breeder
           </h2>
           <div>
-            <div className="bg-[#9EF6DE1F] sm:p-5 p-2.5 rounded-lg space-y-2.5">
+            <div className="bg-[#9EF6DE1F] sm:p-5 p-2.5 rounded-lg space-y-2.5 border border-[#9ef6dfc2]">
               <div className="flex gap-2 sm:gap-4">
                 <img
                   src={window.$BackEndURL+puppyDetail?.business_profile?.logo}

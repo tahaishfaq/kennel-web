@@ -251,8 +251,8 @@ const PuppyDetail = ({ puppyDetail }) => {
           </div>
 
           <div className="sm:flex hidden sm:items-end  flex-col">
-            <div className="flex items-center gap-x-32 ">
-              <span className="sm:px-2.5 px-1.5 py-1.5 sm:text-sm text-xs bg-[#71C900] text-white rounded-[4px] flex items-center gap-x-1">
+            <div className="flex items-center gap-x-4 ">
+              <span className="sm:px-2.5 px-1.5 py-1 sm:text-sm text-xs bg-[#71C900] text-white rounded-[4px] flex items-center gap-x-1">
                 Bring Home Date:{" "}
                 {calculateGoHomeDate(puppyDetail?.go_home_date_duration)}
               </span>

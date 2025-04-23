@@ -24,7 +24,7 @@ const ChampParentCard = ({
           className="w-[200px] h-[150px] object-cover rounded-lg"
         />
       </div>
-      <div className="flex-1 px-6">
+      <div className="flex-1 px-4">
         <h3 className="text-2xl font-medium text-[#000000] mb-2">{name}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 text-sm text-gray-600 bg-[#0000000A] p-3 rounded-lg">
           <div>

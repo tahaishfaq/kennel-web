@@ -42,7 +42,7 @@
 }
 
 .slick-dots {
-  bottom: 40px !important; /* Adjust vertical position */
+  bottom: 20px !important; /* Adjust vertical position */
 }
 
 .slick-dots li {
