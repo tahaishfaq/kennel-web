@@ -6,7 +6,9 @@ import { AdoptionProvider } from "./context/AdoptionContext.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-window.$BackEndURL = "https://primary.kennelboss.app";
+// window.$BackEndURL = "https://primary.kennelboss.app";
+
+window.$BackEndURL = "https://kennelbossv2.frappe.cloud";
 
 window.$FrontendURL = "https://pickmepets.com";
 

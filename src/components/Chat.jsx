@@ -286,6 +286,32 @@ const Chat = ({ closeChat, businessProfile }) => {
     }
   };
 
+  const sendFirebaseNotification = async (message) => {
+    const dataObject = {
+      title: "New Message",
+      message: message,
+      token: hashData?.device_id,
+      type: "chat",
+      object: `${hashData?.name}`,
+    };
+
+    console.log("dataObject", dataObject);
+
+    try {
+      await axios
+        .post(
+          `${window.$BackEndURL}/api/method/kennelboss.push_notification.send_firebase_notification`,
+          { data: dataObject }
+        )
+        .then((res) => {
+          console.log("push noti", res);
+          console.log("Notification sent successfully");
+        });
+    } catch (error) {
+      console.error("Error sending notification: ", error);
+    }
+  };
+
   const handleSendMessage = async () => {
     if (newMessage.trim() === "") {
       toast.error("Enter a valid message!");
@@ -314,6 +340,8 @@ const Chat = ({ closeChat, businessProfile }) => {
         is_file: false,
       });
 
+      await sendFirebaseNotification(newMessage);
+
       setNewMessage("");
       toScroll.current?.scrollTo({
         top: toScroll.current.scrollHeight,
@@ -323,7 +351,6 @@ const Chat = ({ closeChat, businessProfile }) => {
       console.error("Error sending message:", error);
     }
   };
-
 
   const handleKeyDown = async (e) => {
     if (e.key === "Enter") {

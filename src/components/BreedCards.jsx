@@ -19,7 +19,7 @@ const BreedCards = ({ data }) => {
         <img
           src={
             data?.breed_image
-              ? window.$BackEndURL + data?.breed_image
+              ? data?.breed_image
               : "https://via.placeholder.com/150"
           }
           alt="puppy"

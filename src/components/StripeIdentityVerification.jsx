@@ -26,7 +26,7 @@ const StripeIdentityVerification = ({ adoptionTicket }) => {
 
     try {
       const response = await axios.post(
-        `https://primary.kennelboss.app/api/method/kennelboss.verification.create_verification_session`,
+        `https://kennelbossv2.frappe.cloud/api/method/kennelboss.verification.create_verification_session`,
         json
       );
 

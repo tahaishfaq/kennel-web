@@ -42,7 +42,7 @@ const PaymentOptions = ({ adoptionTicket }) => {
 
     try {
       const res = await axios.post(
-        "https://primary.kennelboss.app/api/method/kennelboss.stpayments.create_checkout_session",
+        "https://kennelbossv2.frappe.cloud/api/method/kennelboss.stpayments.create_checkout_session",
         json
       );
       console.log(res);

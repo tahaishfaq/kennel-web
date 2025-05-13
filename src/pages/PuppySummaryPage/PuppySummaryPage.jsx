@@ -127,6 +127,13 @@ const PuppySummaryPage = () => {
   return (
     <div className="bg-[#ebebeb] min-h-screen font-satoshi">
       <NavBar />
+      <style>
+        {`
+          .reamaze-widget {
+            display: none !important;
+          }
+        `}
+      </style>
 
       <div className="max-w-4xl mx-auto sm:pt-24 pt-20 pb-10 sm:px-0 px-4">
         <div className="flex sm:items-center items-start sm:flex-row flex-col-reverse justify-between">

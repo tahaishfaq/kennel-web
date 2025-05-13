@@ -61,7 +61,7 @@ export const AdoptionProvider = ({ children }) => {
     const json = { website_customer: name };
     try {
       const res = await axios.post(
-        `https://primary.kennelboss.app/api/method/kennelboss.stcustomer.create_stcustomer`,
+        `https://kennelbossv2.frappe.cloud/api/method/kennelboss.stcustomer.create_stcustomer`,
         json
       );
       console.log("Stripe Customer", res?.data?.message);
@@ -93,7 +93,7 @@ export const AdoptionProvider = ({ children }) => {
 
   //   try {
   //     const res = await axios.post(
-  //       "https://primary.kennelboss.app/api/method/kennelboss.stpayments.create_payment_intent",
+  //       "https://kennelbossv2.frappe.cloud/api/method/kennelboss.stpayments.create_payment_intent",
   //       json
   //     );
   //     console.log("Stripe payment intent response", res);

@@ -21,7 +21,7 @@ const PaymentStatus = () => {
   const verifyPayment = async (sessionId) => {
     try {
       const response = await axios.post(
-        "https://primary.kennelboss.app/api/method/kennelboss.stpayments.verify_checkout_session",
+        "https://kennelbossv2.frappe.cloud/api/method/kennelboss.stpayments.verify_checkout_session",
         { session_id: sessionId }
       );
 

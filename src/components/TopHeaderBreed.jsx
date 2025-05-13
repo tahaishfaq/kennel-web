@@ -47,7 +47,7 @@ export default function TopHeaderBreed() {
         {breeds.map((breed, index) => (
           <div key={index} className="flex flex-col items-center">
             <img
-              src={window.$BackEndURL + breed.breed_image}
+              src={breed.breed_image}
               alt={breed.name}
               className="sm:w-[220px] sm:h-[220px] h-24 w-24 object-cover rounded-full shadow-md"
             />

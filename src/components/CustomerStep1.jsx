@@ -86,7 +86,7 @@ const CustomerStep1 = ({ adoptionTicket, customer }) => {
     try {
       // Call your backend to create the VerificationSession.
       const response = await axios.post(
-        `https://primary.kennelboss.app/api/method/kennelboss.verification.create_verification_session`,
+        `https://kennelbossv2.frappe.cloud/api/method/kennelboss.verification.create_verification_session`,
         json
       );
       console.log("Stripe Response", response);
